@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './CreateTeam.css';
 
 function CreateTeam() {
   const [teamName, setTeamName] = useState('');
@@ -93,7 +94,7 @@ function CreateTeam() {
   };
 
   return (
-    <div>
+    <div className='create-team'>
       <h1>Create New Team</h1>
       <form onSubmit={handleSubmit}>
         <label>Team Name</label>
@@ -105,8 +106,10 @@ function CreateTeam() {
           onChange={(e) => setTeamName(e.target.value)}
           required
         />
+
+<button type="submit">Create Team</button>
         <br />
-        <label>Members:</label>
+        <h2>Members</h2>
         <br />
 
         <div>
@@ -149,7 +152,8 @@ function CreateTeam() {
         <button type="button" onClick={handleAddNewMember}>
           Add Member
         </button>
-        <button type="submit">Create Team</button>
+
+        
         <p>Team Secret Code:</p>
       </form>
 
