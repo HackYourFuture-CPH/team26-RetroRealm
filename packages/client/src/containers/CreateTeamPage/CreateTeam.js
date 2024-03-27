@@ -1,16 +1,12 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 function CreateTeam() {
   const [teamName, setTeamName] = useState('');
-  const [teamMembers, setTeamMembers] = useState([
-    {
-      firstName: '',
-      lastName: '',
-      email: '' /* secretCode: generateSecretCode() */,
-    },
-  ]);
-  const [employees,setEmployees] = useState([]);
-  const [mockEmployees] = useState([
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLasttName] = useState('');
+  const [email, setEmail] = useState('');
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [employees, setEmployees] = useState([
     { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
     { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
     {
@@ -20,56 +16,115 @@ function CreateTeam() {
       email: 'alice@example.com',
     },
   ]);
-  const [mockMembers] = useState([
-    { firstName: 'Michael', lastName: 'Jordan', email: 'mj@example.com' },
-    { firstName: 'LeBron', lastName: 'James', email: 'lj@example.com' },
-    { firstName: 'Kobe', lastName: 'Bryant', email: 'kb@example.com' },
-  ]);
 
-  const handleInputChange = (index, event) => {
-    const { name, value } = event.target;
-    const list = [...teamMembers];
-    list[index][name] = value;
-    setTeamMembers(list);
-
+  const handleInputChange = (inputType, e) => {
+    if (inputType === 'firstNameInput') {
+      setFirstName(e.target.value);
+    } else if (inputType === 'lastNameInput') {
+      setLasttName(e.target.value);
+    } else if (inputType === 'emailInput') {
+      setEmail(e.target.value);
+    }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    if (!teamMembers.length) {
+      alert('Please add at least one member to the team.');
+      return;
+    }
+
+    console.log('teamMembers:', teamMembers);
   };
 
-  const handleAddMember = () => {
-    
-  }
+  const handleAddNewMember = () => {
+    const existingTeamMember = teamMembers.find(
+      (member) => member.email == email,
+    );
+
+    if (existingTeamMember) {
+      alert('The member already exist in the team');
+      return;
+    }
+
+    if (!firstName || !lastName || !email) {
+      alert('Please input first name, last name & email');
+    } else {
+      const newMember = {
+        id: null,
+        firstName,
+        lastName,
+        email,
+      };
+
+      teamMembers.push(newMember);
+
+      setTeamMembers([...teamMembers]);
+      setFirstName('');
+      setLasttName('');
+      setEmail('');
+    }
+  };
+
+  const addExcistingMember = (e) => {
+    const existingTeamMember = teamMembers.find(
+      (member) => member.email == e.target.value,
+    );
+
+    if (existingTeamMember) {
+      alert('The member already exist in the team');
+    } else {
+      const memeber = employees.find(
+        (member) => member.email == e.target.value,
+      );
+
+      teamMembers.push(memeber);
+      setTeamMembers([...teamMembers]);
+    }
+  };
+
+  const handleDelete = (emailToDelete) => {
+    const newTeamMembers = teamMembers.filter(
+      (member) => member.email !== emailToDelete,
+    );
+
+    setTeamMembers(newTeamMembers);
+  };
 
   return (
     <div>
       <h1>Create New Team</h1>
       <form onSubmit={handleSubmit}>
         <label>Team Name</label>
-        <input type="text" name="teamName" placeholder="Team Name" required />
+        <input
+          type="text"
+          name="teamName"
+          placeholder="Team Name"
+          value={teamName}
+          onChange={(e) => setTeamName(e.target.value)}
+          required
+        />
         <br />
         <label>Members:</label>
         <br />
 
-        <div key={teamMembers.id}>
+        <div>
           <label>First Name</label>
           <input
             type="text"
             name="firstName"
             placeholder="First Name"
-            required
-            value={teamMembers.firstName}
-            onChange={(e) => handleInputChange(teamMembers.id, e)}
+            value={firstName}
+            onChange={(e) => handleInputChange('firstNameInput', e)}
           />
           <label>Last Name</label>
           <input
             type="text"
             name="lastName"
             placeholder="Last Name"
-            required
-            value={teamMembers.lastName}
-            onChange={(e) => handleInputChange(teamMembers.id, e)}
+            value={lastName}
+            onChange={(e) => handleInputChange('lastNameInput', e)}
           />
           <br />
           <label>Email</label>
@@ -77,22 +132,23 @@ function CreateTeam() {
             type="email"
             name="email"
             placeholder="Email"
-            required
-            value={teamMembers.email}
-            onChange={(e) => handleInputChange(teamMembers.id, e)}
+            value={email}
+            onChange={(e) => handleInputChange('emailInput', e)}
           />
           <br />
         </div>
         <label>Select an employee</label>
-        <select>
+        <select onChange={(e) => addExcistingMember(e)}>
           <option value="">Select an existing employee</option>
-          {mockEmployees.map((employee) => (
+          {employees.map((employee) => (
             <option key={employee.id} value={employee.email}>
               {employee.firstName} {employee.lastName}
             </option>
           ))}
         </select>
-        <button type="button" onClick={handleAddMember}>Add Member</button>
+        <button type="button" onClick={handleAddNewMember}>
+          Add Member
+        </button>
         <button type="submit">Create Team</button>
         <p>Team Secret Code:</p>
       </form>
@@ -101,11 +157,15 @@ function CreateTeam() {
         <h2>Team Members</h2>
         <ul>
           {teamMembers.map((member) => (
-            <li>{member.firstName} {member.lastName} - {member.email}</li>
+            <li key={member.email}>
+              {member.firstName} {member.lastName} - {member.email}
+              <button type="button" onClick={() => handleDelete(member.email)}>
+                x
+              </button>
+            </li>
           ))}
         </ul>
       </div>
-
     </div>
   );
 }
