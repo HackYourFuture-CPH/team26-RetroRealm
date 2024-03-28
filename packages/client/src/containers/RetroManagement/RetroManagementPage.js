@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './RetroManagementPage.css';
 // import { FaTrashAlt, FaPaintBrush } from 'react-icons/fa';
 
+const initialInputField = {
+  id: Date.now() + Math.random(),
+  value: '',
+};
+
 export const RetroManagementPage = () => {
   const [retrospectives, setRetrospectives] = useState([]);
   const [newRetroTitle, setNewRetroTitle] = useState('');
-  const [addNewRetro, setAddNewRetro] = useState('');
+  const [inputFields, setInputFields] = useState([initialInputField]);
 
   const fetchRetrospectives = async () => {
     try {
@@ -16,7 +21,8 @@ export const RetroManagementPage = () => {
       const data = await response.json();
       setRetrospectives(data);
     } catch (error) {
-      console('Error fetching retrospectives:', error);
+      // eslint-disable-next-line no-console
+      console.error('Error fetching retrospectives:', error);
     }
   };
 
@@ -36,68 +42,78 @@ export const RetroManagementPage = () => {
       fetchRetrospectives();
       setNewRetroTitle('');
     } catch (error) {
-      console('Error in creating retrospective:', error);
+      // eslint-disable-next-line no-console
+      console.error('Error in creating retrospective:', error);
     }
   };
+
+  const addInputField = () => {
+    setInputFields([...inputFields, initialInputField]);
+  };
+
+  const handleInputChange = (id, newValue) => {
+    setInputFields((prevInputFields) =>
+      prevInputFields.map((inputField) =>
+        inputField.id === id ? { ...inputField, value: newValue } : inputField,
+      ),
+    );
+  };
+
+  // const removeInputField = (index) => {
+  //   const fields = inputFields.filter((inputField, i) => i !== index);
+  //   setInputFields(fields);
+  // };
 
   useEffect(() => {
     fetchRetrospectives();
   }, []);
 
   return (
-    <div>
-      <h1>Create New Retros</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title </label>
+    <div className="retro-management-page">
+      <h1 className="title">Create New Retros</h1>
+      <form className="new-retro-form" onSubmit={handleSubmit}>
+        <div className="input-container">
+          <label className="label" htmlFor="title">
+            Title
+          </label>
           <input
             type="text"
             value={newRetroTitle}
             onChange={(e) => setNewRetroTitle(e.target.value)}
             placeholder="New Title"
           />
-          <button type="submit">Create</button>
+          <button type="submit" className="create-button">
+            Create
+          </button>
         </div>
       </form>
-      <ul>
+      <ul className="retrospectives-list">
         {retrospectives.map((retro) => (
-          <li key={retro.id}>{retro.title}</li>
+          <li className="list-item" key={retro.id}>
+            {retro.title}
+          </li>
         ))}
       </ul>
-      <div>
-        <h3>Add New Retros</h3>
-        <form>
-          <input
-            type="text"
-            value={addNewRetro}
-            onChange={(e) => setAddNewRetro(e.target.value)}
-          />
-        </form>
-        <form>
-          <input
-            type="text"
-            value={addNewRetro}
-            onChange={(e) => setAddNewRetro(e.target.value)}
-          />
-        </form>
-        <form>
-          <input
-            type="text"
-            value={addNewRetro}
-            onChange={(e) => setAddNewRetro(e.target.value)}
-          />
-        </form>
-        <form>
-          <input
-            type="text"
-            value={addNewRetro}
-            onChange={(e) => setAddNewRetro(e.target.value)}
-          />
-        </form>
+      <div className="add-new-retros">
+        <h3 className="heading">Add New Retros</h3>
+        {inputFields.map((inputField) => (
+          <div key={inputField.id} className="input-group">
+            <input
+              className="input-element"
+              type="text"
+              value={inputField.value}
+              onChange={(e) => handleInputChange(inputField.id, e.target.value)}
+              placeholder="Enter new retro details"
+            />
+          </div>
+        ))}
+        <button onClick={addInputField} type="button" className="add-button">
+          Add more
+        </button>
       </div>
-      <div>
-        <p>Created by Retro Team</p>
-        <p>CC Copyright: Retro Team</p>
+      <div className="copyright">
+        <p className="copyright-text">Created by Retro Team</p>
+        <p className="copyright-text">CC Copyright: Retro Team</p>
       </div>
     </div>
   );
