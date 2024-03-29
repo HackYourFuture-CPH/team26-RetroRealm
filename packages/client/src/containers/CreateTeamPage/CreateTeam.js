@@ -95,7 +95,7 @@ function CreateTeam() {
   };
 
   return (
-    <div className='create-team'>
+    <div className="create-team">
       <h1>Create New Team</h1>
       <form onSubmit={handleSubmit}>
         <label>Team Name</label>
@@ -108,7 +108,7 @@ function CreateTeam() {
           required
         />
 
-<button type="submit">Create Team</button>
+        <button type="submit">Create Team</button>
         <br />
         <h2>Members</h2>
         <br />
@@ -154,7 +154,6 @@ function CreateTeam() {
           Add Member
         </button>
 
-        
         <p>Team Secret Code:</p>
       </form>
 

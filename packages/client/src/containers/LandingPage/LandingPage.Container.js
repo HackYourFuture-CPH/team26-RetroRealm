@@ -19,7 +19,7 @@ export const LandingPage = () => {
       <span>Landing Page</span>
       {/*  {exampleResources.map((example) => (
         <div key={example.id}>{example.title}</div>
-      ))} */ }
+      ))} */}
       <CreateTeam />
     </div>
   );
