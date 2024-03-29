@@ -2,12 +2,16 @@
   "name": "retrorealm",
   "version": "1.0.0",
   "main": "index.js",
+  "private": true,
   "repository": "https://github.com/HackYourFuture-CPH/team26-RetroRealm.git",
   "author": "Aaron Moses <pastures77@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "express": "^4.19.2"
   },
+  "workspaces": [
+    "packages/*"
+  ],
   "lint-staged": {
     "*.js": [
       "eslint --fix",
