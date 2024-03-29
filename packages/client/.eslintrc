@@ -1,8 +1,21 @@
 {
-  "extends": ["../../.eslintrc", "react-app", "react-app/jest", "airbnb/hooks"],
+  "parser": "@babel/eslint-parser",
+  "extends": [
+    "../../.eslintrc",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "react-app",
+    "react-app/jest",
+    "airbnb/hooks"
+  ],
   "env": {
     "jest": true,
     "browser": true
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   },
   "rules": {
     "no-console": "error",

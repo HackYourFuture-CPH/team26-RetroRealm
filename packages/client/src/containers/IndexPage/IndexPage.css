@@ -1,0 +1,20 @@
+.header-container {
+  display: inline-block;
+  margin-top: 50px;
+}
+
+.my-button {
+  background: linear-gradient(
+    to right,
+    transparent,
+    red,
+    orange,
+    yellow,
+    green,
+    violet
+  );
+  border-radius: 7px;
+  padding: 7px 20px;
+  font-size: 10px;
+  font-family: 'Roboto', sans-serif;
+}
