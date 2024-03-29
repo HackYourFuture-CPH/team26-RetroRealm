@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { Navbar } from './containers/NavbarPage/Navbar';
 import IndexPage from './containers/IndexPage/IndexPage';
 // import { LandingPage } from './containers/LandingPage/LandingPage.Container';
 import { PageNotFound } from './containers/PageNotFound/PageNotFound.Container';
@@ -9,6 +10,7 @@ function App() {
   return (
     <div className="app">
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<IndexPage />} />
           {/* <Route path="/" element={<LandingPage />} /> */}
