@@ -33,7 +33,6 @@ function CreateTeam() {
 
     if (!teamMembers.length) {
       alert('Please add at least one member to the team.');
-      return;
     }
   };
 
