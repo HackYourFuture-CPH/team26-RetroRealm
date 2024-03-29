@@ -7,7 +7,7 @@ function CreateTeam() {
   const [lastName, setLasttName] = useState('');
   const [email, setEmail] = useState('');
   const [teamMembers, setTeamMembers] = useState([]);
-  const [employees, setEmployees] = useState([
+  const [employees] = useState([
     { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
     { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
     {
@@ -32,21 +32,24 @@ function CreateTeam() {
     event.preventDefault();
 
     if (!teamMembers.length) {
+      // eslint-disable-next-line no-alert
       alert('Please add at least one member to the team.');
     }
   };
 
   const handleAddNewMember = () => {
     const existingTeamMember = teamMembers.find(
-      (member) => member.email == email,
+      (member) => member.email === email,
     );
 
     if (existingTeamMember) {
+      // eslint-disable-next-line no-alert
       alert('The member already exist in the team');
       return;
     }
 
     if (!firstName || !lastName || !email) {
+      // eslint-disable-next-line no-alert
       alert('Please input first name, last name & email');
     } else {
       const newMember = {
@@ -67,14 +70,15 @@ function CreateTeam() {
 
   const addExcistingMember = (e) => {
     const existingTeamMember = teamMembers.find(
-      (member) => member.email == e.target.value,
+      (member) => member.email === e.target.value,
     );
 
     if (existingTeamMember) {
+      // eslint-disable-next-line no-alert
       alert('The member already exist in the team');
     } else {
       const memeber = employees.find(
-        (member) => member.email == e.target.value,
+        (member) => member.email === e.target.value,
       );
 
       teamMembers.push(memeber);

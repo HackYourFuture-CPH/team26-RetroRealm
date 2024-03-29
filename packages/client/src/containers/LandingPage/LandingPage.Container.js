@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { apiURL } from '../../apiURL';
+import React from 'react';
 import './LandingPage.Style.css';
 import CreateTeam from '../CreateTeamPage/CreateTeam';
 
