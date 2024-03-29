@@ -35,8 +35,6 @@ function CreateTeam() {
       alert('Please add at least one member to the team.');
       return;
     }
-
-    console.log('teamMembers:', teamMembers);
   };
 
   const handleAddNewMember = () => {
