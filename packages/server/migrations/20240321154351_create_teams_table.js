@@ -4,7 +4,7 @@
  */
 exports.up = function (knex) {
   return knex.schema.createTable('Teams', (table) => {
-    table.increments('id').primary().unique();
+    table.increments('id').primary();
     table.string('team_name').notNullable();
     table.string('team_code').notNullable();
   });
