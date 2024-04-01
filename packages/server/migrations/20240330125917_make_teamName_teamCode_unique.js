@@ -4,8 +4,12 @@
  */
 
 exports.up = async (knex) => {
-  await knex.raw('ALTER TABLE `Teams` ADD CONSTRAINT uq_team_name UNIQUE (team_name);');
-  await knex.raw('ALTER TABLE `Teams` ADD CONSTRAINT uq_team_code UNIQUE (team_code);');
+  await knex.raw(
+    'ALTER TABLE `Teams` ADD CONSTRAINT uq_team_name UNIQUE (team_name);',
+  );
+  await knex.raw(
+    'ALTER TABLE `Teams` ADD CONSTRAINT uq_team_code UNIQUE (team_code);',
+  );
 };
 /**
  * @param { import("knex").Knex } knex
