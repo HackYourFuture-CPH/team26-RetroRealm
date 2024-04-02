@@ -59,9 +59,8 @@ function CreateTeam() {
         email,
       };
 
-      teamMembers.push(newMember);
+      setTeamMembers(prevTeamMembers => [...prevTeamMembers, newMember])
 
-      setTeamMembers([...teamMembers]);
       setFirstName('');
       setLastName('');
       setEmail('');
@@ -93,6 +92,12 @@ function CreateTeam() {
 
     setTeamMembers(newTeamMembers);
   };
+
+  const buttonClasses = ['primaryButton']
+
+  if(!firstName || !lastName || !email) {
+    buttonClasses.push('buttonDisabled');
+  }
 
   return (
     <div className="create-team">
@@ -150,7 +155,7 @@ function CreateTeam() {
             </option>
           ))}
         </select>
-        <button type="button" onClick={handleAddNewMember}>
+        <button type="button" className={`${buttonClasses.join(' ')}`} onClick={handleAddNewMember} disabled={!firstName || !lastName || !email}>
           Add Member
         </button>
 
