@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react';
 import './RetroManagementPage.css';
 // import { FaTrashAlt, FaPaintBrush } from 'react-icons/fa';
 
-const initialInputField = {
-  id: Date.now() + Math.random(),
-  value: '',
-};
+// const initialInputField = {
+//   id: Date.now() + Math.random(),
+//   value: '',
+// };
 
 export const RetroManagementPage = () => {
   const [retrospectives, setRetrospectives] = useState([]);
   const [newRetroTitle, setNewRetroTitle] = useState('');
-  const [inputFields, setInputFields] = useState([initialInputField]);
+  const [inputFields, setInputFields] = useState([]);
 
   const fetchRetrospectives = async () => {
     try {
@@ -25,6 +25,10 @@ export const RetroManagementPage = () => {
       console.error('Error fetching retrospectives:', error);
     }
   };
+
+  useEffect(() => {
+    fetchRetrospectives();
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -48,7 +52,10 @@ export const RetroManagementPage = () => {
   };
 
   const addInputField = () => {
-    setInputFields([...inputFields, initialInputField]);
+    setInputFields([
+      ...inputFields,
+      { id: Date.now() + Math.random(), value: '' },
+    ]);
   };
 
   const handleInputChange = (id, newValue) => {
@@ -59,14 +66,14 @@ export const RetroManagementPage = () => {
     );
   };
 
-  // const removeInputField = (index) => {
-  //   const fields = inputFields.filter((inputField, i) => i !== index);
-  //   setInputFields(fields);
-  // };
+  const removeInputField = (id) => {
+    const fields = inputFields.filter((inputField) => inputField.id !== id);
+    setInputFields(fields);
+  };
 
-  useEffect(() => {
-    fetchRetrospectives();
-  }, []);
+  // useEffect(() => {
+  //   fetchRetrospectives();
+  // }, []);
 
   return (
     <div className="retro-management-page">
@@ -105,10 +112,17 @@ export const RetroManagementPage = () => {
               onChange={(e) => handleInputChange(inputField.id, e.target.value)}
               placeholder="Enter new retro details"
             />
+            <button
+              onClick={() => removeInputField(inputField.id)}
+              type="button"
+              className="delete-button"
+            >
+              X
+            </button>
           </div>
         ))}
         <button onClick={addInputField} type="button" className="add-button">
-          Add more
+          Add
         </button>
       </div>
       <div className="copyright">
