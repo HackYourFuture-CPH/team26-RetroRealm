@@ -77,11 +77,11 @@ function CreateTeam() {
       // eslint-disable-next-line no-alert
       alert('The member already exist in the team');
     } else {
-      const memeber = employees.find(
+      const excistingMember = employees.find(
         (member) => member.email === e.target.value,
       );
 
-      teamMembers.push(memeber);
+      teamMembers.push(excistingMember);
       setTeamMembers([...teamMembers]);
     }
   };
