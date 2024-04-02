@@ -18,3 +18,12 @@
   font-size: 10px;
   font-family: 'Roboto', sans-serif;
 }
+
+.buttonDisabled {
+  background-color: rgb(78, 72, 72);
+  color: rgb(255, 255, 255);
+}
+
+primaryButton {
+  background-color: blue;
+}
