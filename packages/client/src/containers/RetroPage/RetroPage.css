@@ -1,0 +1,59 @@
+body { background: linear-gradient(to right, transparent, rgb(196, 180, 39), rgb(0, 238, 255), rgb(64, 206, 211), green); }
+    red,
+    orange,
+    yellow,
+
+
+.team-container{
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px; /* Adjust the value as needed */
+  margin-top: 50px;
+  margin-left: 10px;
+}
+
+.h2 {
+    display: inline-block;
+    /* justify-content: space-between; */
+    align-items: center;
+  color: rgb(255, 72, 0);
+}
+.team-button, 
+.input-button, 
+.past-button, 
+.start-button, 
+.submit-button {
+  /* display: inline-block; */
+  justify-content: space-between;
+  margin-right: 10px;
+  margin-left: 10px;
+  height: 30px;
+  width: 180px;
+  align-items: center;
+  color: rgb(255, 72, 0);
+  border-radius: 4px;
+}
+
+.submit-button {
+  display: flex;
+  margin-left: 45%;
+  margin-top: 20px;
+  background-color: rgb(127, 239, 209);
+  
+}
+
+.finalize-button{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 48%;
+  background-color: rgb(229, 74, 13);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
