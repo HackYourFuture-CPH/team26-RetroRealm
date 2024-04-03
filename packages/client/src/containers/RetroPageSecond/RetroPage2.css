@@ -1,0 +1,198 @@
+/* .container {
+  display: inline-flex;
+  flex-direction: column;
+  height: 100px;
+  margin-top: 50px;
+  width: 300px;
+ 
+} */
+ .retroContainer {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+   height: 100px;
+  margin-top: 50px;
+  width: 300px;
+}
+
+.button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    width: 76%;
+    height: 40%;
+}
+
+
+.newRetro-button {
+    margin-left: 5px;
+    width: 8%;
+    height: 36px;
+    margin-top: 30px;
+    height: 47%;
+    width: 96%;
+
+}
+
+/* .input[type='text'], input[type='email'], select {
+    width: 10%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+} */
+
+.retroHeader{
+  display: flex;
+  justify-content:flex-start;
+  margin-left: 20px;
+}
+
+.question {
+  width: 300px;
+  font-weight: bold;
+  margin-bottom: 10px;
+} 
+
+
+.box {
+    border: 1px solid #ccc;
+    margin: 50px;
+    width: 90%;
+    height: 66%;
+}
+
+    .joinCodeInput{
+      width: 11%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    }
+
+.inputContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  width: 10%;
+} 
+
+.roleSelect {
+  display: inline-block;
+  height: 20px;
+  width: 100px;
+  margin-top: 50px;
+  margin-left: 10px;  
+  margin-right: 10px;
+} 
+
+ .commentInput {
+  display: inline-block;
+  height: 20px;
+  width: 100%;
+  margin-top: 50px;
+  margin-left: 4px;  
+  margin-right: 4px;
+}
+
+
+
+.addCommentButton {
+    margin-right: 5px;
+    width: 44px;
+    height: 25px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+    height: 44px;
+    margin-top: 142px;
+}
+
+.joinButton{
+  width: 55%;
+}
+
+
+.completeButton {
+  background-color: #007bff;
+  border: none; 
+  padding: 10px 20px; 
+  margin-bottom: 20px;
+  cursor: pointer;
+  position: fixed; 
+  bottom: 0; 
+  left: 50%; 
+  transform: translateX(-50%);
+}
+
+.completeButton:hover {
+  background-color: #043c78;
+}
+
+/* RetroPage2.css */
+
+/* .retroContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+} */
+
+/* .container {
+  display: grid;
+  grid-gap: 20px; 
+  padding: 20px; 
+} */
+
+/* .container > div {
+  border: 1px solid #ccc; /* Border around each que
+  padding: 20px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* .retroHeader{
+  display: inline-flex;
+}
+
+
+
+.question {
+  width: 250px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 200px;
+}
+
+.commentInput {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.addCommentButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.addCommentButton:hover {
+  background-color: #0056b3;
+}
+
+.roleSelect {
+  margin-bottom: 10px;
+} */
