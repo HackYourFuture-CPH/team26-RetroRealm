@@ -5,6 +5,7 @@ import { Navbar } from './containers/NavbarPage/Navbar';
 import IndexPage from './containers/IndexPage/IndexPage';
 // import { LandingPage } from './containers/LandingPage/LandingPage.Container';
 import { PageNotFound } from './containers/PageNotFound/PageNotFound.Container';
+import CreateTeam from './containers/CreateTeamPage/CreateTeam';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<IndexPage />} />
           {/* <Route path="/" element={<LandingPage />} /> */}
+          <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
