@@ -4,7 +4,7 @@ const router = express.Router({ mergeParams: true });
 const employeesController = require('../controllers/employeesController');
 
 router.get('/', (req, res, next) => {
-    employeesController
+  employeesController
     .fetchExistingMembers(req, res)
     .then((result) => res.json(result))
     .catch(next);
