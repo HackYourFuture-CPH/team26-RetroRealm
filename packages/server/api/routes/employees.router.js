@@ -5,7 +5,7 @@ const employeesController = require('../controllers/employeesController');
 
 router.get('/', (req, res, next) => {
   employeesController
-    .fetchExistingMembers(req, res)
+    .fetchEmployees(req, res)
     .then((result) => res.json(result))
     .catch(next);
 });
