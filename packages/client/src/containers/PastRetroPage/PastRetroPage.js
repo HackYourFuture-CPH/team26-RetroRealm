@@ -33,10 +33,12 @@ const mockedRetrospectives = [
     ],
     puzzles: [{ id: 1, participant: 'Mia', comment: 'Budget.' }],
   },
+  // Add more mocked retrospective objects as needed
 ];
 
 export const PastRetroPage = () => {
   const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTitles, setSelectedTitles] = useState([]);
   const retrospectives = selectedDate
     ? mockedRetrospectives.filter((retro) => retro.date === selectedDate)
     : mockedRetrospectives;
@@ -44,6 +46,16 @@ export const PastRetroPage = () => {
   // Function to handle date selection
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
+  };
+
+  // Function to handle title selection
+  const handleTitleChange = (event) => {
+    const { value, checked } = event.target;
+    setSelectedTitles((prevTitles) =>
+      checked
+        ? [...prevTitles, value]
+        : prevTitles.filter((title) => title !== value),
+    );
   };
 
   return (
@@ -55,10 +67,24 @@ export const PastRetroPage = () => {
           <label htmlFor="date">Select Date:</label>
           <select id="date" value={selectedDate} onChange={handleDateChange}>
             <option value="">All Dates</option>
-            {/* Render options based on available dates */}
+            <option value="2024-04-01">2024-04-01</option>
+            <option value="2024-04-02">2024-04-02</option>
+            <option value="2024-04-03">2024-04-03</option>
+            <option value="2024-04-04">2024-04-04</option>
+          </select>
+        </div>
+        {/* Title selection */}
+        <div className="title-selection">
+          <label htmlFor="titles">Select Titles:</label>
+          <select
+            id="titles"
+            multiple
+            value={selectedTitles}
+            onChange={handleTitleChange}
+          >
             {mockedRetrospectives.map((retro) => (
-              <option key={retro.date} value={retro.date}>
-                {retro.date}
+              <option key={retro.id} value={retro.title}>
+                {retro.title}
               </option>
             ))}
           </select>
