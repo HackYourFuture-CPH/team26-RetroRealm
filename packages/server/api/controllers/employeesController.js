@@ -1,6 +1,6 @@
 const knex = require('../../config/db');
 
-const fetchExistingMembers = async (req, res) => {
+const employees = async (req, res) => {
   try {
     const existingMembers = await knex('Employees').select('*');
     res.status(200).json({ existingMembers });
@@ -10,5 +10,5 @@ const fetchExistingMembers = async (req, res) => {
 };
 
 module.exports = {
-  fetchExistingMembers,
+  employees,
 };
