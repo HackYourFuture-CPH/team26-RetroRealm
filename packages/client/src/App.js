@@ -18,7 +18,7 @@ function App() {
           {/* <Route path="/" element={<LandingPage />} /> */}
           <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
           <Route path="*" element={<PageNotFound />} />
-          <Route path="/PastRetroPage" element={<PastRetroPage />} />
+          <Route path="/retros/past" element={<PastRetroPage />} />
         </Routes>
       </Router>
     </div>
