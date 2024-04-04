@@ -1,14 +1,14 @@
 const knex = require('../../config/db');
 
-const employees = async (req, res) => {
+const fetchExistingMembers = async (req, res) => {
   try {
-    const existingMembers = await knex('Employees').select('*');
-    res.status(200).json({ existingMembers });
+    const employees = await knex('Employees').select('*');
+    res.status(200).json({ employees });
   } catch (error) {
     res.status(500).json({ message: 'Internal server error' });
   }
 };
 
 module.exports = {
-  employees,
+  fetchExistingMembers,
 };
