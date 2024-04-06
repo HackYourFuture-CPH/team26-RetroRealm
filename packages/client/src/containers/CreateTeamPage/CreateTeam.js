@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { apiURL } from '../../apiURL';
 import './CreateTeam.css';
+
+
 
 function CreateTeam() {
   const [teamName, setTeamName] = useState('');
@@ -7,16 +10,30 @@ function CreateTeam() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [teamMembers, setTeamMembers] = useState([]);
-  const employees = [
-    { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
-    { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
-    {
-      id: 3,
-      firstName: 'Alice',
-      lastName: 'Johnson',
-      email: 'alice@example.com',
-    },
-  ];
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    
+    const fetchEmployees = async () => {
+      const fetchEmployeesAPIMethod = `${apiURL()}/employees`;
+
+      try {
+        const response = await fetch(fetchEmployeesAPIMethod);
+        if (!response.ok) {
+          throw new Error('Failed to fetch employees');
+        }
+        const data = await response.json();
+        setEmployees(data.employees);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
+  
+
+
 
   const handleInputChange = (inputType, e) => {
     if (inputType === 'firstNameInput') {
