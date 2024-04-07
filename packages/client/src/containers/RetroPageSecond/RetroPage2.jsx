@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './RetroPage2.css';
 
@@ -15,6 +15,7 @@ function RetroPage2() {
   const [comments, setComments] = useState({});
   const [joinCode, setJoinCode] = useState('');
   const [inputValues, setInputValues] = useState({});
+  const [selectedRole, setSelectedRole] = useState('');
   const navigate = useNavigate();
 
   const handleNewRetro = async () => {
@@ -40,36 +41,38 @@ function RetroPage2() {
   };
 
   const handleComplete = () => {
-    navigate('/retropage1');
+    navigate('/retropage');
   };
 
-  const handleJoin = useCallback(async () => {
-    try {
-      if (!joinCode) {
-        return;
-      }
+  const handleJoin =
+    (async () => {
+      try {
+        if (!joinCode) {
+          return;
+        }
 
-      const response = await fetch(`/api/retros/${joinCode}`);
+        const response = await fetch(`/api/retros/${joinCode}`);
 
-      if (!response.ok) {
-        throw new Error(
-          `Failed to fetch retro session: ${response.statusText}`,
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch retro session: ${response.statusText}`,
+          );
+        }
+
+        const retroSession = await response.json();
+
+        setRetroCode(retroSession.retroCode);
+        setSelectedQuestions(retroSession.questions);
+        setComments(retroSession.comments);
+        setJoinCode('');
+      } catch (error) {
+        // eslint-disable-next-line no-alert
+        alert(
+          'Failed to join the retro session. Please check the code and try again.',
         );
       }
-
-      const retroSession = await response.json();
-
-      setRetroCode(retroSession.retroCode);
-      setSelectedQuestions(retroSession.questions);
-      setComments(retroSession.comments);
-      setJoinCode('');
-    } catch (error) {
-      // eslint-disable-next-line no-alert
-      alert(
-        'Failed to join the retro session. Please check the code and try again.',
-      );
-    }
-  }, [joinCode]);
+    },
+    [joinCode]);
 
   const handleCommentInput = (questionId, e) => {
     if (e.key === 'Enter') {
@@ -85,10 +88,10 @@ function RetroPage2() {
   return (
     <div>
       <div className="retroContainer">
-        <div className="retroHeader">
-          <h2>Retro</h2>
+        <h2>Retro</h2>
+        <div className="newRetroContainer">
           <button
-            className="newRetro-button"
+            className="newRetroButton"
             type="button"
             onClick={handleNewRetro}
           >
@@ -107,10 +110,10 @@ function RetroPage2() {
           Join
         </button>
       </div>
-      {selectedQuestions.map((question) => (
-        <div key={question.id} className="container">
-          <div className="question">
-            {question.text}
+      <div className="questionsContainer">
+        {selectedQuestions.map((question) => (
+          <div key={question.id} className="container">
+            <div className="question">{question.text}</div>
             <div className="box">
               {comments[question.id] &&
                 comments[question.id].map((comment) => (
@@ -118,35 +121,38 @@ function RetroPage2() {
                     {comment.text}
                   </div>
                 ))}
-              <select className="roleSelect">
-                <option value="">Select role</option>
-                <option value="teamMember">Team Member</option>
-                <option value="teamLeader">Team Leader</option>
-              </select>
-
-              <input
-                type="text"
-                placeholder="Add a comment"
-                value={inputValues[question.id] || ''}
-                onChange={(e) => handleCommentInput(question.id, e)}
-                onKeyDown={(e) =>
-                  e.key === 'Enter' && handleCommentInput(question.id, e)
-                }
-                className="commentInput"
-              />
-
-              <button
-                type="button"
-                onClick={() => handleAddComment(question.id)}
-                className="addCommentButton"
-              >
-                +
-              </button>
+              <div className="commentInputContainer">
+                <select
+                  className="roleSelect"
+                  value={selectedRole}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                >
+                  <option value="">Select role</option>
+                  <option value="teamMember">Team Member</option>
+                  <option value="teamLeader">Team Leader</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Add a comment"
+                  value={inputValues[question.id] || ''}
+                  onChange={(e) => handleCommentInput(question.id, e)}
+                  onKeyDown={(e) =>
+                    e.key === 'Enter' && handleCommentInput(question.id, e)
+                  }
+                  className="commentInput"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleAddComment(question.id)}
+                  className="addCommentButton"
+                >
+                  +
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      ))}
-
+        ))}
+      </div>
       <button className="completeButton" type="button" onClick={handleComplete}>
         Complete
       </button>
