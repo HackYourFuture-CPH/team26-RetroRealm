@@ -1,0 +1,22 @@
+.nav-container {
+  background: linear-gradient(
+    to right,
+    transparent,
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet
+  );
+  height: 60px;
+}
+
+.nav-header {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
