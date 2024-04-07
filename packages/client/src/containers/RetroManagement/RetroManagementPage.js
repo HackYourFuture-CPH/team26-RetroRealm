@@ -65,10 +65,6 @@ export const RetroManagementPage = () => {
     setInputFields(fields);
   };
 
-  // useEffect(() => {
-  //   fetchRetrospectives();
-  // }, []);
-
   return (
     <div className="retro-management-page">
       <h1 className="title">Create New Retros</h1>
