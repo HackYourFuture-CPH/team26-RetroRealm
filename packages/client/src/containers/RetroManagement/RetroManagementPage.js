@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import './RetroManagementPage.css';
-// import { FaTrashAlt, FaPaintBrush } from 'react-icons/fa';
-
-// const initialInputField = {
-//   id: Date.now() + Math.random(),
-//   value: '',
-// };
 
 export const RetroManagementPage = () => {
   const [retrospectives, setRetrospectives] = useState([]);
