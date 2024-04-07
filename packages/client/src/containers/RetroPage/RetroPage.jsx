@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiURL } from '../../apiURL';
 import './RetroPage.css';
@@ -9,44 +9,37 @@ export default function RetroPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [retroCodeValue, setRetroCode] = useState('');
+  const [isValidRetroCode, setIsValidRetroCode] = useState(false);
 
-  const updateTeamInformation = () => {
-    navigate('/updateTeamPage');
-  };
-
-  const initializeRetroSession = () => {
-    if (!retroCodeValue || retroCodeValue.length !== 8) {
-      setError('Retro code must be 8 characters');
-      return;
-    }
-    const newRetroCode = Math.random().toString(36).substring(2, 10);
-    setRetroCode(newRetroCode);
-    setTimeout(() => {
-      navigate(`/RetroPage2/${newRetroCode}`);
-    }, 2000);
+  const updateRetro = () => {
+    navigate('/UpdateTeam');
   };
 
   const pastRetro = () => {
-    navigate('/retroHistory');
+    navigate('/PastRetros');
   };
 
-  const handleSubmit = async () => {
+  const initializeRetroSession = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${apiURL}/validateRetroCode`, {
+      const response = await fetch(`${apiURL()}/generateRetroCode`, {
+        // Call the backend endpoint to generate retro code
         method: 'POST',
-        body: JSON.stringify({ retroCode: retroCodeValue }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
       if (response.ok) {
-        navigate(`/RetroPage2/${retroCodeValue}`);
+        const retroCode = await response.text();
+        setRetroCode(retroCode);
+        setCurrentDate(new Date().toLocaleDateString());
+        setIsValidRetroCode(true);
       } else {
+        setIsValidRetroCode(false);
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Invalid retro code');
+        throw new Error(errorData.error || 'Failed to generate retro code');
       }
     } catch (catchError) {
       setError(catchError.message);
@@ -55,27 +48,24 @@ export default function RetroPage() {
     }
   };
 
-  const finalizeRetro = async () => {
-    if (!retroCodeValue || retroCodeValue.length !== 8) {
-      setError('Retro code must be 8 characters');
-      return;
-    }
+  const handleSubmit = async () => {
+    // Implement code submission logic here
     try {
-      const response = await fetch(`${apiURL}/endRetro`, {
+      const response = await fetch(`${apiURL()}/validateRetroCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          retroCode: retroCodeValue,
-        }),
+        body: JSON.stringify({ retroCode: retroCodeValue }),
       });
 
       if (response.ok) {
-        // Retro session ended successfully
+        // Retro code is valid, navigate to the next page or perform further actions
+        navigate('/NextPage');
       } else {
+        // Retro code is invalid, handle accordingly
         const errorData = await response.json();
-        throw new Error(errorData.message);
+        throw new Error(errorData.error || 'Invalid retro code');
       }
     } catch (catchError) {
       setError(catchError.message);
@@ -88,23 +78,17 @@ export default function RetroPage() {
 
   return (
     <div>
-      <div className="team-container">
-        <h2>Team</h2>
-        <button
-          className="team-button"
-          type="button"
-          onClick={updateTeamInformation}
-        >
-          Update team
-        </button>
-      </div>
       <h2 className="retro-header">Retro</h2>
       <button
         className="start-button"
         type="button"
         onClick={initializeRetroSession}
+        disabled={loading || isValidRetroCode}
       >
         Start Retro - {currentDate}
+      </button>
+      <button className="update-button" type="button" onClick={updateRetro}>
+        Update Retro
       </button>
       <button className="past-button" type="button" onClick={pastRetro}>
         Past Retros
@@ -116,13 +100,15 @@ export default function RetroPage() {
         value={retroCodeValue}
         onChange={(e) => setRetroCode(e.target.value)}
       />
-      <button className="submit-button" type="button" onClick={handleSubmit}>
+
+      <button
+        className="submit-button"
+        type="button"
+        onClick={handleSubmit}
+        disabled={!retroCodeValue || loading || !isValidRetroCode}
+      >
         Submit
       </button>
-      <button className="finalize-button" type="button" onClick={finalizeRetro}>
-        End Retro
-      </button>
-      {retroCodeValue && <p>Generated Retro Code: {retroCodeValue}</p>}
       {loading && <p>Loading...</p>}
       {error && <p>Error: {error}</p>}
     </div>
