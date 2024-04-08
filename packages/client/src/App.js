@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import { Navbar } from './containers/NavbarPage/Navbar';
-import RetroPage from './containers/RetroPage/RetroPage';
+import JoinRetroPage from './containers/JoinRetroPage/JoinRetroPage';
 import { PageNotFound } from './containers/PageNotFound/PageNotFound.Container';
 import CreateTeam from './containers/CreateTeamPage/CreateTeam';
 
@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<RetroPage />} />
+          <Route path="/" element={<JoinRetroPage />} />
           <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>

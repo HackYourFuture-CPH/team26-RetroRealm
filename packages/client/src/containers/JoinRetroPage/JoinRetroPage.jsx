@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiURL } from '../../apiURL';
-import './RetroPage.css';
+import './JoinRetroPage.css';
 
-export default function RetroPage() {
+export default function JoinRetroPage() {
   const navigate = useNavigate();
   const [currentDate, setCurrentDate] = useState('');
   const [loading, setLoading] = useState(false);
