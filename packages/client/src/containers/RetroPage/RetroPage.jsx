@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RetroPage2.css';
+import './RetroPage.css';
 
 const questions = [
   { id: 1, text: 'What did we do well?' },
@@ -9,7 +9,7 @@ const questions = [
   { id: 4, text: 'What are the roadblocks?' },
 ];
 
-function RetroPage2() {
+function RetroPage() {
   const [retroCode, setRetroCode] = useState(null);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [comments, setComments] = useState({});
@@ -160,4 +160,4 @@ function RetroPage2() {
   );
 }
 
-export default RetroPage2;
+export default RetroPage;
