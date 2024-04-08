@@ -82,3 +82,89 @@ select {
   cursor: pointer;
   border-radius: 5px;
 }
+.retroContainer {
+  margin-bottom: 20px;
+}
+
+.newRetroContainer {
+  display: inline-block;
+  width: 190px;
+  height: 60px;
+}
+
+.newRetroButton {
+  margin-right: 10px;
+}
+
+.joinCodeInput {
+  width: 90px;
+  color: #8909ec;
+}
+
+.questionsContainer {
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 3.5rem;
+}
+
+.joinButton {
+  margin-bottom: 7%;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.container1 {
+  background-color: red;
+}
+
+.container2 {
+  background-color: blue;
+}
+
+.container3 {
+  background-color: green;
+}
+
+.container4 {
+  background-color: yellow;
+}
+
+.question {
+  margin-bottom: 10%;
+  font-weight: bold;
+}
+
+.box {
+  display: inline-block;
+}
+
+.comment {
+  margin-right: 10px;
+}
+
+.commentInputContainer {
+  display: inline-block;
+  width: 50%;
+  margin-left: 21%;
+}
+
+.roleSelect {
+  width: 90px;
+  margin-right: 10px;
+}
+
+.commentInput {
+  width: 43%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ce760b;
+  border-radius: 5px;
+}
+
+.addCommentButton {
+  width: 10px;
+  margin-right: 10px;
+}
