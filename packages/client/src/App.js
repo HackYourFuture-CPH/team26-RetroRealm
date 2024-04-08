@@ -12,7 +12,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<JoinRetroPage />} />
+          <Route path="/JoinRetroPage" element={<JoinRetroPage />} />
           <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
