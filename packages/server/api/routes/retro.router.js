@@ -30,6 +30,17 @@ router.post('/', (req, res) => {
     });
 });
 
+router.post('/add', (req, res) => {
+  retroController
+    .addRetro(req.body)
+    .then((result) => res.json(result))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      res.status(500).send('Failed to add retro').end();
+    });
+});
+
 router.patch('/:id', (req, res, next) => {
   retroController
     .edit(req.params.id, req.body)

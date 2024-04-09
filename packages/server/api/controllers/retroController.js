@@ -50,10 +50,20 @@ const createRetro = async (body) => {
   };
 };
 
+const addRetro = async (body) => {
+  try {
+    const retro = await createRetro(body);
+    return retro;
+  } catch (error) {
+    throw new HttpError('Failed to add retro', 500);
+  }
+};
+
 module.exports = {
   getRetro,
   getRetroById,
   editRetro,
   deleteRetro,
   createRetro,
+  addRetro,
 };
