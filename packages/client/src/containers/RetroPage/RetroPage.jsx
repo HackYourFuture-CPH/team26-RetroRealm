@@ -1,116 +1,163 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiURL } from '../../apiURL';
 import './RetroPage.css';
 
-export default function RetroPage() {
+const questions = [
+  { id: 1, text: 'What did we do well?' },
+  { id: 2, text: 'What did we learn?' },
+  { id: 3, text: 'What should we do differently next time?' },
+  { id: 4, text: 'What are the roadblocks?' },
+];
+
+function RetroPage() {
+  const [retroCode, setRetroCode] = useState(null);
+  const [selectedQuestions, setSelectedQuestions] = useState([]);
+  const [comments, setComments] = useState({});
+  const [joinCode, setJoinCode] = useState('');
+  const [inputValues, setInputValues] = useState({});
+  const [selectedRole, setSelectedRole] = useState('');
   const navigate = useNavigate();
-  const [currentDate, setCurrentDate] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [retroCodeValue, setRetroCode] = useState('');
-  const [isValidRetroCode, setIsValidRetroCode] = useState(false);
 
-  const updateRetro = () => {
-    navigate('/UpdateTeam');
+  const handleNewRetro = async () => {
+    const newRetroCode = Math.random().toString(36).substring(2, 10);
+    setRetroCode(newRetroCode);
+    setSelectedQuestions(questions);
   };
 
-  const pastRetro = () => {
-    navigate('/PastRetros');
+  const handleAddComment = async (questionId) => {
+    const commentText = inputValues[questionId];
+    if (!commentText) return;
+
+    const newCommentId = Math.random().toString(36).substring(2, 10);
+    setComments((prevComments) => ({
+      ...prevComments,
+      [questionId]: [
+        ...(prevComments[questionId] || []),
+        { id: newCommentId, text: commentText },
+      ],
+    }));
+
+    setInputValues((prevValues) => ({ ...prevValues, [questionId]: '' }));
   };
 
-  const initializeRetroSession = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await fetch(`${apiURL()}/generateRetroCode`, {
-        // Call the backend endpoint to generate retro code
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+  const handleComplete = () => {
+    navigate('/retropage');
+  };
 
-      if (response.ok) {
-        const retroCode = await response.text();
-        setRetroCode(retroCode);
-        setCurrentDate(new Date().toLocaleDateString());
-        setIsValidRetroCode(true);
-      } else {
-        setIsValidRetroCode(false);
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to generate retro code');
+  const handleJoin =
+    (async () => {
+      try {
+        if (!joinCode) {
+          return;
+        }
+
+        const response = await fetch(`/api/retros/${joinCode}`);
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch retro session: ${response.statusText}`,
+          );
+        }
+
+        const retroSession = await response.json();
+
+        setRetroCode(retroSession.retroCode);
+        setSelectedQuestions(retroSession.questions);
+        setComments(retroSession.comments);
+        setJoinCode('');
+      } catch (error) {
+        // eslint-disable-next-line no-alert
+        alert(
+          'Failed to join the retro session. Please check the code and try again.',
+        );
       }
-    } catch (catchError) {
-      setError(catchError.message);
-    } finally {
-      setLoading(false);
+    },
+    [joinCode]);
+
+  const handleCommentInput = (questionId, e) => {
+    if (e.key === 'Enter') {
+      handleAddComment(questionId);
+    } else {
+      setInputValues((prevValues) => ({
+        ...prevValues,
+        [questionId]: e.target.value,
+      }));
     }
   };
-
-  const handleSubmit = async () => {
-    // Implement code submission logic here
-    try {
-      const response = await fetch(`${apiURL()}/validateRetroCode`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ retroCode: retroCodeValue }),
-      });
-
-      if (response.ok) {
-        // Retro code is valid, navigate to the next page or perform further actions
-        navigate('/NextPage');
-      } else {
-        // Retro code is invalid, handle accordingly
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Invalid retro code');
-      }
-    } catch (catchError) {
-      setError(catchError.message);
-    }
-  };
-
-  useEffect(() => {
-    setCurrentDate(new Date().toLocaleDateString());
-  }, []);
 
   return (
     <div>
-      <h2 className="retro-header">Retro</h2>
-      <button
-        className="start-button"
-        type="button"
-        onClick={initializeRetroSession}
-        disabled={loading || isValidRetroCode}
-      >
-        Start Retro - {currentDate}
+      <div className="retroContainer">
+        <h2>Retro</h2>
+        <div className="newRetroContainer">
+          <button
+            className="newRetroButton"
+            type="button"
+            onClick={handleNewRetro}
+          >
+            New Retro
+          </button>
+        </div>
+        {retroCode && <p>Retro code: {retroCode}</p>}
+        <input
+          className="joinCodeInput"
+          type="text"
+          placeholder="Enter code to join"
+          value={joinCode}
+          onChange={(e) => setJoinCode(e.target.value)}
+        />
+        <button className="joinButton" type="button" onClick={handleJoin}>
+          Join
+        </button>
+      </div>
+      <div className="questionsContainer">
+        {selectedQuestions.map((question) => (
+          <div key={question.id} className="container">
+            <div className="question">{question.text}</div>
+            <div className="box">
+              {comments[question.id] &&
+                comments[question.id].map((comment) => (
+                  <div key={comment.id} className="comment">
+                    {comment.text}
+                  </div>
+                ))}
+              <div className="commentInputContainer">
+                <select
+                  className="roleSelect"
+                  value={selectedRole}
+                  onChange={(e) => setSelectedRole(e.target.value)}
+                >
+                  <option value="">Select role</option>
+                  <option value="teamMember">Team Member</option>
+                  <option value="teamLeader">Team Leader</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Add a comment"
+                  value={inputValues[question.id] || ''}
+                  onChange={(e) => handleCommentInput(question.id, e)}
+                  onKeyDown={(e) =>
+                    e.key === 'Enter' && handleCommentInput(question.id, e)
+                  }
+                  className="commentInput"
+                />
+                <button
+                  type="button"
+                  onClick={() => handleAddComment(question.id)}
+                  className="addCommentButton"
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <button className="completeButton" type="button" onClick={handleComplete}>
+        Complete
       </button>
-      <button className="update-button" type="button" onClick={updateRetro}>
-        Update Retro
-      </button>
-      <button className="past-button" type="button" onClick={pastRetro}>
-        Past Retros
-      </button>
-      <input
-        className="input-button"
-        type="text"
-        placeholder="Enter Retro Code"
-        value={retroCodeValue}
-        onChange={(e) => setRetroCode(e.target.value)}
-      />
-
-      <button
-        className="submit-button"
-        type="button"
-        onClick={handleSubmit}
-        disabled={!retroCodeValue || loading || !isValidRetroCode}
-      >
-        Submit
-      </button>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
     </div>
   );
 }
+
+export default RetroPage;
