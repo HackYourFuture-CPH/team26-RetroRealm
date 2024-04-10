@@ -25,6 +25,7 @@ export default function JoinRetroPage() {
     try {
       const response = await fetch(`${apiURL()}/generateRetroCode`, {
         // Call the backend endpoint to generate retro code
+
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -49,7 +50,8 @@ export default function JoinRetroPage() {
   };
 
   const handleSubmit = async () => {
-    // Implement code submission logic here
+    setLoading(true);
+    setError(null);
     try {
       const response = await fetch(`${apiURL()}/validateRetroCode`, {
         method: 'POST',
