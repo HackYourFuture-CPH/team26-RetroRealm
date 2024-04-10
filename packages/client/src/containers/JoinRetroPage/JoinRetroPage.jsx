@@ -40,7 +40,10 @@ export default function JoinRetroPage() {
       } else {
         setIsValidRetroCode(false);
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to generate retro code');
+        throw new Error(
+          errorData.error ||
+            "We're sorry, but we couldn't start a new Retro session. Please try again later.",
+        );
       }
     } catch (catchError) {
       setError(catchError.message);
@@ -63,7 +66,7 @@ export default function JoinRetroPage() {
 
       if (response.ok) {
         // Retro code is valid, navigate to the next page or perform further actions
-        navigate('/NextPage');
+        navigate(`/retropage/${retroCodeValue}`);
       } else {
         // Retro code is invalid, handle accordingly
         const errorData = await response.json();
@@ -89,6 +92,7 @@ export default function JoinRetroPage() {
       >
         Start Retro - {currentDate}
       </button>
+      <p>Retro Code: {retroCodeValue}</p>
       <button className="update-button" type="button" onClick={updateRetro}>
         Update Retro
       </button>
