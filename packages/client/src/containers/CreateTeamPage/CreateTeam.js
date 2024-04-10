@@ -11,6 +11,7 @@ function CreateTeam() {
   const [email, setEmail] = useState('');
   const [teamMembers, setTeamMembers] = useState([]);
   const [employees, setEmployees] = useState([]);
+  const [fromExistingEmployees, setFromExistingEmployees] = useState([]);
 
   useEffect(() => {
     
@@ -45,12 +46,45 @@ function CreateTeam() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
 
-    if (!teamMembers.length) {
+    if (![...teamMembers, ...fromExistingEmployees].length) {
       // eslint-disable-next-line no-alert
       alert('Please add at least one member to the team.');
+      return;
+    }
+    try {
+
+      const postEmployeesAPIMethod = `${apiURL()}/teams`;
+      const response = await fetch(postEmployeesAPIMethod, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          teamName,
+          newEmployees: teamMembers.map((member) => ({
+            first_name: member.firstName,
+            last_name: member.lastName,
+            email: member.email,
+          })),
+          existingEmployees: fromExistingEmployees.map((member) => (member.id)),
+        }),
+       
+        
+      });
+     
+      if (!response.ok) {
+        throw new Error('Failed to create team');
+      }
+
+      const data = await response.json();
+      alert(`Team created successfully! Team Code: ${data.teamCode}`);
+      
+    } catch (error) {
+      console.error('Error creating team:', error);
+      alert('Failed to create team. Please try again.');
     }
   };
 
@@ -85,9 +119,12 @@ function CreateTeam() {
   };
 
   const addExistingMember = (e) => {
+    console.log("addExistingMember");
     const existingTeamMember = teamMembers.find(
       (member) => member.email === e.target.value,
+
     );
+    console.log(existingTeamMember);
 
     if (existingTeamMember) {
       // eslint-disable-next-line no-alert
@@ -96,10 +133,14 @@ function CreateTeam() {
       const excistingMember = employees.find(
         (member) => member.email === e.target.value,
       );
+      console.log(excistingMember);
 
-      teamMembers.push(excistingMember);
-      setTeamMembers([...teamMembers]);
+      setFromExistingEmployees((prevFromExistingEmployees) => [
+        ...prevFromExistingEmployees,
+        excistingMember
+      ])
     }
+
   };
 
   const handleDelete = (emailToDelete) => {
@@ -168,7 +209,7 @@ function CreateTeam() {
           <option value="">Select an existing employee</option>
           {employees.map((employee) => (
             <option key={employee.id} value={employee.email}>
-              {employee.firstName} {employee.lastName}
+              {employee.first_name} {employee.last_name}
             </option>
           ))}
         </select>
@@ -187,7 +228,7 @@ function CreateTeam() {
       <div>
         <h2>Team Members</h2>
         <ul>
-          {teamMembers.map((member) => (
+          {[...teamMembers, ...fromExistingEmployees].map((member) => (
             <li key={member.email}>
               {member.firstName} {member.lastName} - {member.email}
               <button type="button" onClick={() => handleDelete(member.email)}>
