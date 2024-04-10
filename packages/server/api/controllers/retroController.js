@@ -3,7 +3,7 @@ const HttpError = require('../lib/utils/http-error');
 const moment = require('moment-timezone');
 
 const getRetro = async () => {
-  return knex('retro').select('retro.id', 'retro.title', 'retro.date');
+  return knex('Retro').select('Retro.id', 'Retro.title', 'Retro.date');
 };
 
 const getRetroById = async (id) => {
@@ -12,8 +12,8 @@ const getRetroById = async (id) => {
   }
 
   try {
-    const retro = await knex('retro')
-      .select('retro.id as id', 'title', 'date')
+    const retro = await knex('Retro')
+      .select('Retro.id as id', 'title', 'date')
       .where({ id });
     if (retro.length === 0) {
       throw new Error(`incorrect entry with the id of ${id}`, 404);
@@ -29,18 +29,18 @@ const editRetro = async (retroId, updatedRetro) => {
     throw new HttpError('retroId should be a number', 400);
   }
 
-  return knex('retro').where({ id: retroId }).update({
+  return knex('Retro').where({ id: retroId }).update({
     title: updatedRetro.title,
     updatedAt: moment().format(),
   });
 };
 
 const deleteRetro = async (retroId) => {
-  return knex('retro').where({ id: retroId }).del();
+  return knex('Retro').where({ id: retroId }).del();
 };
 
 const createRetro = async (body) => {
-  await knex('retro').insert({
+  await knex('Retro').insert({
     title: body.title,
     date: body.date,
   });
