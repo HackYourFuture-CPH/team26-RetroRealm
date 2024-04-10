@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { apiURL } from '../../apiURL';
 import './CreateTeam.css';
 
-
-
 function CreateTeam() {
   const [teamName, setTeamName] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -14,7 +12,6 @@ function CreateTeam() {
   const [fromExistingEmployees, setFromExistingEmployees] = useState([]);
 
   useEffect(() => {
-    
     const fetchEmployees = async () => {
       const fetchEmployeesAPIMethod = `${apiURL()}/employees`;
 
@@ -32,9 +29,6 @@ function CreateTeam() {
 
     fetchEmployees();
   }, []);
-  
-
-
 
   const handleInputChange = (inputType, e) => {
     if (inputType === 'firstNameInput') {
@@ -46,7 +40,7 @@ function CreateTeam() {
     }
   };
 
-  const handleSubmit = async(event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (![...teamMembers, ...fromExistingEmployees].length) {
@@ -55,7 +49,6 @@ function CreateTeam() {
       return;
     }
     try {
-
       const postEmployeesAPIMethod = `${apiURL()}/teams`;
       const response = await fetch(postEmployeesAPIMethod, {
         method: 'POST',
@@ -69,19 +62,16 @@ function CreateTeam() {
             last_name: member.lastName,
             email: member.email,
           })),
-          existingEmployees: fromExistingEmployees.map((member) => (member.id)),
+          existingEmployees: fromExistingEmployees.map((member) => member.id),
         }),
-       
-        
       });
-     
+
       if (!response.ok) {
         throw new Error('Failed to create team');
       }
 
       const data = await response.json();
       alert(`Team created successfully! Team Code: ${data.teamCode}`);
-      
     } catch (error) {
       console.error('Error creating team:', error);
       alert('Failed to create team. Please try again.');
@@ -119,10 +109,9 @@ function CreateTeam() {
   };
 
   const addExistingMember = (e) => {
-    console.log("addExistingMember");
+    console.log('addExistingMember');
     const existingTeamMember = teamMembers.find(
       (member) => member.email === e.target.value,
-
     );
     console.log(existingTeamMember);
 
@@ -137,10 +126,9 @@ function CreateTeam() {
 
       setFromExistingEmployees((prevFromExistingEmployees) => [
         ...prevFromExistingEmployees,
-        excistingMember
-      ])
+        excistingMember,
+      ]);
     }
-
   };
 
   const handleDelete = (emailToDelete) => {
@@ -203,6 +191,15 @@ function CreateTeam() {
             onChange={(e) => handleInputChange('emailInput', e)}
           />
           <br />
+          <button
+          type="button"
+          className={`${buttonClasses.join(' ')}`}
+          onClick={handleAddNewMember}
+          disabled={!firstName || !lastName || !email}
+        >
+          Add Member
+        </button> <br />
+
         </div>
         <label>Select an employee</label>
         <select onChange={(e) => addExistingMember(e)}>
@@ -213,14 +210,7 @@ function CreateTeam() {
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          className={`${buttonClasses.join(' ')}`}
-          onClick={handleAddNewMember}
-          disabled={!firstName || !lastName || !email}
-        >
-          Add Member
-        </button>
+       
 
         <p>Team Secret Code:</p>
       </form>
