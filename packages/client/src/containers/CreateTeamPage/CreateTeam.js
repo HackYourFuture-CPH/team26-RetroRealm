@@ -10,6 +10,7 @@ function CreateTeam() {
   const [teamMembers, setTeamMembers] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [fromExistingEmployees, setFromExistingEmployees] = useState([]);
+  const [teamCode, setTeamCode] = useState('');
 
   useEffect(() => {
     const fetchEmployees = async () => {
@@ -71,6 +72,7 @@ function CreateTeam() {
       }
 
       const data = await response.json();
+      setTeamCode(data.teamCode);
       alert(`Team created successfully! Team Code: ${data.teamCode}`);
     } catch (error) {
       console.error('Error creating team:', error);
@@ -94,7 +96,6 @@ function CreateTeam() {
       alert('Please input first name, last name & email');
     } else {
       const newMember = {
-        id: null,
         firstName,
         lastName,
         email,
@@ -192,14 +193,14 @@ function CreateTeam() {
           />
           <br />
           <button
-          type="button"
-          className={`${buttonClasses.join(' ')}`}
-          onClick={handleAddNewMember}
-          disabled={!firstName || !lastName || !email}
-        >
-          Add Member
-        </button> <br />
-
+            type="button"
+            className={`${buttonClasses.join(' ')}`}
+            onClick={handleAddNewMember}
+            disabled={!firstName || !lastName || !email}
+          >
+            Add Member
+          </button>
+          <br />
         </div>
         <label>Select an employee</label>
         <select onChange={(e) => addExistingMember(e)}>
@@ -210,9 +211,8 @@ function CreateTeam() {
             </option>
           ))}
         </select>
-       
 
-        <p>Team Secret Code:</p>
+        <label>Team Secret Code: {teamCode}</label>
       </form>
 
       <div>
@@ -220,7 +220,7 @@ function CreateTeam() {
         <ul>
           {[...teamMembers, ...fromExistingEmployees].map((member) => (
             <li key={member.email}>
-              {member.firstName} {member.lastName} - {member.email}
+              {member.first_name} {member.last_name} - {member.email}
               <button type="button" onClick={() => handleDelete(member.email)}>
                 x
               </button>
