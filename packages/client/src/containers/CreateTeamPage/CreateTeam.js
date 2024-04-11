@@ -24,7 +24,8 @@ function CreateTeam() {
         const data = await response.json();
         setEmployees(data.employees);
       } catch (error) {
-        console.log(error);
+        // eslint-disable-next-line no-console
+        console.error('Error fetching employees:', error);
       }
     };
 
@@ -110,11 +111,9 @@ function CreateTeam() {
   };
 
   const addExistingMember = (e) => {
-    console.log('addExistingMember');
     const existingTeamMember = teamMembers.find(
       (member) => member.email === e.target.value,
     );
-    console.log(existingTeamMember);
 
     if (existingTeamMember) {
       // eslint-disable-next-line no-alert
@@ -123,7 +122,6 @@ function CreateTeam() {
       const excistingMember = employees.find(
         (member) => member.email === e.target.value,
       );
-      console.log(excistingMember);
 
       setFromExistingEmployees((prevFromExistingEmployees) => [
         ...prevFromExistingEmployees,
