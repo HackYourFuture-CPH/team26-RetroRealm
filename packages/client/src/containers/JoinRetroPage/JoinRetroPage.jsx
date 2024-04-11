@@ -82,41 +82,48 @@ export default function JoinRetroPage() {
   }, []);
 
   return (
-    <div>
+    <div className="retro-container">
       <h2 className="retro-header">Retro</h2>
       <button
-        className="start-button"
+        className="retro-button start-button"
         type="button"
         onClick={initializeRetroSession}
         disabled={loading || isValidRetroCode}
       >
         Start Retro - {currentDate}
       </button>
-      <p>Retro Code: {retroCodeValue}</p>
-      <button className="update-button" type="button" onClick={updateRetro}>
+      <p className="retro-code">Retro Code: {retroCodeValue}</p>
+      <button
+        className="retro-button update-button"
+        type="button"
+        onClick={updateRetro}
+      >
         Update Retro
       </button>
-      <button className="past-button" type="button" onClick={pastRetro}>
+      <button
+        className="retro-button past-button"
+        type="button"
+        onClick={pastRetro}
+      >
         Past Retros
       </button>
       <input
-        className="input-button"
+        className="retro-input"
         type="text"
         placeholder="Enter Retro Code"
         value={retroCodeValue}
         onChange={(e) => setRetroCode(e.target.value)}
       />
-
       <button
-        className="submit-button"
+        className="retro-button submit-button"
         type="button"
         onClick={handleSubmit}
         disabled={!retroCodeValue || loading || !isValidRetroCode}
       >
         Submit
       </button>
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
+      {loading && <p className="loading-message">Loading...</p>}
+      {error && <p className="error-message">Error: {error}</p>}
     </div>
   );
 }

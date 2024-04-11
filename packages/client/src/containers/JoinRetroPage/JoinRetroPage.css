@@ -1,84 +1,67 @@
-body {
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgb(238, 237, 229),
-    rgb(0, 238, 255),
-    rgb(64, 206, 211),
-    rgb(150, 232, 150)
-  );
-}
-
-.team-container {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 5px; /* Adjust the value as needed */
-  margin-top: 50px;
-  margin-left: 10px;
+.retro-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .retro-header {
-  /* display: inline-block; */
-  /* justify-content: space-between; */
-  align-items: center;
-  color: rgb(5, 5, 5);
-  margin-top: 50px;
-  font-size: 40px;
-}
-.team-button,
-.input-button,
-.past-button,
-.update-button,
-.start-button,
-.submit-button {
-  /* display: inline-block; */
-  justify-content: space-between;
-  margin-right: 10px;
-  margin-left: 10px;
-  height: 30px;
-  width: 180px;
-  align-items: center;
-  color: white;
-  border-radius: 4px;
-  margin-bottom: 30px;
-  margin-top: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.input-button {
-  /* padding-left: 53px; */
-  /* width: 10px; */
-  /* margin-left: 22%; */
-  color: yellow;
-  background-color: rgb(207, 231, 201);
-}
-.input[type='text'],
-input[type='email'],
-select {
-  width: 15%;
-  padding: 10px;
+.retro-button {
+  display: block;
   margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.start-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.update-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.past-button {
+  background-color: #f44336;
+  color: white;
 }
 
 .submit-button {
-  display: flex;
-  margin-left: 45%;
-  margin-top: 20px;
-  background-color: rgb(5, 255, 134);
-  padding: 25px 69px;
+  background-color: #9c27b0;
+  color: white;
 }
 
-.finalize-button {
-  display: flex;
-  margin-top: 30px;
-  margin-left: 48%;
-  background-color: rgb(229, 74, 13);
-  color: white;
-  border: none;
-  padding: 9px 30px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: 5px;
+.retro-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.retro-code {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.loading-message,
+.error-message {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: #f44336;
 }
