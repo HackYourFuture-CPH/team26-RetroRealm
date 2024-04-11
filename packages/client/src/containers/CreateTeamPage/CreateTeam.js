@@ -74,9 +74,12 @@ function CreateTeam() {
 
       const data = await response.json();
       setTeamCode(data.teamCode);
+      // eslint-disable-next-line no-alert
       alert(`Team created successfully! Team Code: ${data.teamCode}`);
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Error creating team:', error);
+      // eslint-disable-next-line no-alert
       alert('Failed to create team. Please try again.');
     }
   };
