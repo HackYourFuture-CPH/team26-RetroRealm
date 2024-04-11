@@ -21,7 +21,7 @@ const createTeam = async (body) => {
   });
 
   // Create new members and get there ID's
-  if(newEmployees.length){
+  if (newEmployees.length) {
     await knex('Employees').insert(newEmployees);
   }
 
