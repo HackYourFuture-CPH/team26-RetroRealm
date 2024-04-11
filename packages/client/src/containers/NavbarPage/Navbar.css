@@ -2,7 +2,6 @@
   background: linear-gradient(
     to right,
     transparent,
-    red,
     orange,
     yellow,
     green,
@@ -19,4 +18,5 @@
   position: absolute;
   top: 0;
   left: 0;
+  margin-left: 5%;
 }

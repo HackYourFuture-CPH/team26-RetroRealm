@@ -1,20 +1,104 @@
-.header-container {
-  display: inline-block;
-  margin-top: 50px;
+.index-container {
+  position: relative;
+  background-image: url('../../../public/assets/images/Screenshot.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
 }
 
-.my-button {
-  background: linear-gradient(
-    to right,
-    transparent,
-    red,
-    orange,
-    yellow,
-    green,
-    violet
-  );
-  border-radius: 7px;
-  padding: 7px 20px;
-  font-size: 10px;
-  font-family: 'Roboto', sans-serif;
+.left-section {
+  width: 50%;
+  padding: 20px;
+}
+
+.right-section {
+  width: 50%;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* .left-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+ 
+} */
+
+.header-container {
+  margin-bottom: 1.5rem;
+}
+
+.header-text {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+  color: #edf4f1;
+}
+
+.sort-size-down-icon {
+  width: 200px;
+}
+
+.input-field {
+  border: 1px solid #31bfe6ea;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  flex: 1;
+  margin-top: 8%;
+  margin-right: 10px;
+  margin-left: 0;
+  width: 20%;
+}
+
+.error-message {
+  color: hwb(120 92% 5%);
+  font-size: 1.4rem;
+  margin-top: 0.7rem;
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.or-heading {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 1rem 0;
+  margin-right: 10px;
+  margin-left: 0;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  color: rgb(238, 250, 224);
+}
+
+.create-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-left: 10px;
+  width: 30%;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.875rem;
+  color: #6c757d;
 }
