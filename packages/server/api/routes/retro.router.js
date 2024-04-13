@@ -43,7 +43,7 @@ router.post('/add', (req, res) => {
 
 router.patch('/:id', (req, res, next) => {
   retroController
-    .edit(req.params.id, req.body)
+    .editRetro(req.params.id, req.body)
     .then((result) => res.json(result))
     .catch(next);
 });

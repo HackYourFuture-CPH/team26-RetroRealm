@@ -43,6 +43,7 @@ const createRetro = async (body) => {
   await knex('Retro').insert({
     title: body.title,
     date: body.date,
+    team_id: 1, // Replace DEFAULT_TEAM_ID with the ID of the default team
   });
 
   return {
@@ -58,6 +59,26 @@ const addRetro = async (body) => {
     throw new HttpError('Failed to add retro', 500);
   }
 };
+
+const createSampleRetro = async () => {
+  const newRetro = {
+    teamId: '1',
+    title: 'New Retro Title',
+    date: '2024-04-12',
+  };
+
+  try {
+    await createRetro(newRetro);
+    // eslint-disable-next-line no-console
+    console.log('Retro created successfully.');
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Error creating retro:', error.message);
+  }
+};
+
+// Call the async function
+createSampleRetro();
 
 module.exports = {
   getRetro,
