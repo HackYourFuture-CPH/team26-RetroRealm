@@ -1,0 +1,67 @@
+.retro-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.retro-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.retro-button {
+  display: block;
+  margin-bottom: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.start-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.update-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.past-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.submit-button {
+  background-color: #9c27b0;
+  color: white;
+}
+
+.retro-input {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.retro-code {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.loading-message,
+.error-message {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  color: #f44336;
+}
