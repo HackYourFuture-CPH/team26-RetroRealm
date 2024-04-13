@@ -1,14 +1,9 @@
 const express = require('express');
 
-const retroRouter = require('./routes/retroController');
+const retroRouter = require('../controllers/retroController');
 
-const app = express();
+const router = express.Router();
 
-app.use(express.json());
-app.use('/api', retroRouter);
+router.post('/generateRetroCode', retroRouter.generateRetroCode);
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  // eslint-disable-next-line no-console
-  console.log(`Server running on port ${port}`);
-});
+module.exports = router;
