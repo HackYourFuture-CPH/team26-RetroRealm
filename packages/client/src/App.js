@@ -7,6 +7,7 @@ import { PageNotFound } from './containers/PageNotFound/PageNotFound.Container';
 import { RetroManagementPage } from './containers/RetroManagement/RetroManagementPage';
 import CreateTeam from './containers/CreateTeamPage/CreateTeam';
 import { PastRetroPage } from './containers/PastRetroPage/PastRetroPage';
+import  IndexPage  from './containers/IndexPage/IndexPage';
 
 function App() {
   return (
@@ -14,11 +15,12 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<RetroPage />} />
+          <Route path="/" element={<IndexPage />} />
           <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
           <Route path="*" element={<PageNotFound />} />
           <Route path="/retromanagement" element={<RetroManagementPage />} />
           <Route path="/retros/past" element={<PastRetroPage />} />
+          <Route path="/retros/:retroID" element={<RetroPage />} />
         </Routes>
       </Router>
     </div>

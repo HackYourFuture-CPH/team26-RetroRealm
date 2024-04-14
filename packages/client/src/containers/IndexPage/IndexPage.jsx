@@ -4,7 +4,7 @@ import { apiURL } from '../../apiURL';
 import './IndexPage.css';
 import JokesRotator from '../Jokes/JokesRotator';
 
-function Index() {
+function IndexPage() {
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -96,4 +96,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default IndexPage;
