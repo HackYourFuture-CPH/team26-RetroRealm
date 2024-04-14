@@ -41,11 +41,6 @@ router.post('/add', (req, res) => {
     });
 });
 
-router.patch('/:id', (req, res, next) => {
-  retroController
-    .editRetro(req.params.id, req.body
-const retroController = require('../controllers/retroController');
-
 router.post('/', (req, res, next) => {
   retroController
     .createTeam(req.body)
@@ -67,6 +62,5 @@ router.delete('/:id', (req, res) => {
     // eslint-disable-next-line no-console
     .catch((error) => console.log(error));
 });
-
 
 module.exports = router;
