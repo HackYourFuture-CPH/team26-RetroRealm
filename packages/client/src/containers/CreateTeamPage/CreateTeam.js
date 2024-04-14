@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { apiURL } from '../../apiURL';
 import './CreateTeam.css';
 
 function CreateTeam() {
@@ -7,16 +8,29 @@ function CreateTeam() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [teamMembers, setTeamMembers] = useState([]);
-  const employees = [
-    { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@example.com' },
-    { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@example.com' },
-    {
-      id: 3,
-      firstName: 'Alice',
-      lastName: 'Johnson',
-      email: 'alice@example.com',
-    },
-  ];
+  const [employees, setEmployees] = useState([]);
+  const [fromExistingEmployees, setFromExistingEmployees] = useState([]);
+  const [teamCode, setTeamCode] = useState('');
+
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      const fetchEmployeesAPIMethod = `${apiURL()}/employees`;
+
+      try {
+        const response = await fetch(fetchEmployeesAPIMethod);
+        if (!response.ok) {
+          throw new Error('Failed to fetch employees');
+        }
+        const data = await response.json();
+        setEmployees(data.employees);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error fetching employees:', error);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
 
   const handleInputChange = (inputType, e) => {
     if (inputType === 'firstNameInput') {
@@ -28,12 +42,45 @@ function CreateTeam() {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!teamMembers.length) {
+    if (![...teamMembers, ...fromExistingEmployees].length) {
       // eslint-disable-next-line no-alert
       alert('Please add at least one member to the team.');
+      return;
+    }
+    try {
+      const postEmployeesAPIMethod = `${apiURL()}/teams`;
+      const response = await fetch(postEmployeesAPIMethod, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          teamName,
+          newEmployees: teamMembers.map((member) => ({
+            first_name: member.firstName,
+            last_name: member.lastName,
+            email: member.email,
+          })),
+          existingEmployees: fromExistingEmployees.map((member) => member.id),
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create team');
+      }
+
+      const data = await response.json();
+      setTeamCode(data.teamCode);
+      // eslint-disable-next-line no-alert
+      alert(`Team created successfully! Team Code: ${data.teamCode}`);
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error creating team:', error);
+      // eslint-disable-next-line no-alert
+      alert('Failed to create team. Please try again.');
     }
   };
 
@@ -53,7 +100,6 @@ function CreateTeam() {
       alert('Please input first name, last name & email');
     } else {
       const newMember = {
-        id: null,
         firstName,
         lastName,
         email,
@@ -80,8 +126,10 @@ function CreateTeam() {
         (member) => member.email === e.target.value,
       );
 
-      teamMembers.push(excistingMember);
-      setTeamMembers([...teamMembers]);
+      setFromExistingEmployees((prevFromExistingEmployees) => [
+        ...prevFromExistingEmployees,
+        excistingMember,
+      ]);
     }
   };
 
@@ -145,34 +193,35 @@ function CreateTeam() {
             onChange={(e) => handleInputChange('emailInput', e)}
           />
           <br />
+          <button
+            type="button"
+            className={`${buttonClasses.join(' ')}`}
+            onClick={handleAddNewMember}
+            disabled={!firstName || !lastName || !email}
+          >
+            Add Member
+          </button>
+          <br />
         </div>
         <label>Select an employee</label>
         <select onChange={(e) => addExistingMember(e)}>
           <option value="">Select an existing employee</option>
           {employees.map((employee) => (
             <option key={employee.id} value={employee.email}>
-              {employee.firstName} {employee.lastName}
+              {employee.first_name} {employee.last_name}
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          className={`${buttonClasses.join(' ')}`}
-          onClick={handleAddNewMember}
-          disabled={!firstName || !lastName || !email}
-        >
-          Add Member
-        </button>
 
-        <p>Team Secret Code:</p>
+        <label>Team Secret Code: {teamCode}</label>
       </form>
 
       <div>
         <h2>Team Members</h2>
         <ul>
-          {teamMembers.map((member) => (
+          {[...teamMembers, ...fromExistingEmployees].map((member) => (
             <li key={member.email}>
-              {member.firstName} {member.lastName} - {member.email}
+              {member.first_name} {member.last_name} - {member.email}
               <button type="button" onClick={() => handleDelete(member.email)}>
                 x
               </button>

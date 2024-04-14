@@ -1,0 +1,19 @@
+.Bubble {
+  width: 550px;
+  height: 250px;
+  border-radius: 50%;
+  background-color: lightblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: drop 10s infinite;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
