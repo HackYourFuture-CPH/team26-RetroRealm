@@ -4,6 +4,7 @@ const router = express.Router();
 
 const exampleResources = require('./exampleResources.router');
 const teamsRouter = require('./teams.router');
+const employeesRouter = require('./employees.router');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -36,5 +37,7 @@ router.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 router.use('/exampleResources', exampleResources);
 
 router.use('/teams', teamsRouter);
+
+router.use('/employees', employeesRouter);
 
 module.exports = router;
