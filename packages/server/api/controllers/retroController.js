@@ -24,17 +24,6 @@ const getRetroById = async (id) => {
   }
 };
 
-const editRetro = async (retroId, updatedRetro) => {
-  if (!retroId) {
-    throw new HttpError('retroId should be a number', 400);
-  }
-
-  return knex('Retro').where({ id: retroId }).update({
-    title: updatedRetro.title,
-    updatedAt: moment().format(),
-  });
-};
-
 const deleteRetro = async (retroId) => {
   return knex('Retro').where({ id: retroId }).del();
 };
@@ -43,7 +32,7 @@ const createRetro = async (body) => {
   await knex('Retro').insert({
     title: body.title,
     date: body.date,
-    team_id: 1, // Replace DEFAULT_TEAM_ID with the ID of the default team
+    team_id: 1,
   });
 
   return {
