@@ -7,7 +7,7 @@ import { PageNotFound } from './containers/PageNotFound/PageNotFound.Container';
 import { RetroManagementPage } from './containers/RetroManagement/RetroManagementPage';
 import CreateTeam from './containers/CreateTeamPage/CreateTeam';
 import { PastRetroPage } from './containers/PastRetroPage/PastRetroPage';
-import  IndexPage  from './containers/IndexPage/IndexPage';
+import IndexPage from './containers/IndexPage/IndexPage';
 
 function App() {
   return (
