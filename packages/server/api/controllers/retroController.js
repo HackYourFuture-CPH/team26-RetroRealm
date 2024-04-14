@@ -1,6 +1,6 @@
 const knex = require('../../config/db');
 const HttpError = require('../lib/utils/http-error');
-const moment = require('moment-timezone');
+// const moment = require('moment-timezone');
 
 const getRetro = async () => {
   return knex('Retro').select('Retro.id', 'Retro.title', 'Retro.date');
@@ -72,7 +72,6 @@ createSampleRetro();
 module.exports = {
   getRetro,
   getRetroById,
-  editRetro,
   deleteRetro,
   createRetro,
   addRetro,
