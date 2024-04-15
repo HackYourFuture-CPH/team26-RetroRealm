@@ -1,6 +1,6 @@
 const knex = require('../../config/db');
 const HttpError = require('../lib/utils/http-error');
-const moment = require('moment-timezone');
+// const moment = require('moment-timezone');
 
 const getRetro = async () => {
   return knex('Retro').select('Retro.id', 'Retro.title', 'Retro.date');
@@ -22,17 +22,6 @@ const getRetroById = async (id) => {
   } catch (error) {
     return error.message;
   }
-};
-
-const editRetro = async (retroId, updatedRetro) => {
-  if (!retroId) {
-    throw new HttpError('retroId should be a number', 400);
-  }
-
-  return knex('Retro').where({ id: retroId }).update({
-    title: updatedRetro.title,
-    updatedAt: moment().format(),
-  });
 };
 
 const deleteRetro = async (retroId) => {
@@ -83,7 +72,6 @@ createSampleRetro();
 module.exports = {
   getRetro,
   getRetroById,
-  editRetro,
   deleteRetro,
   createRetro,
   addRetro,
