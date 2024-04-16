@@ -1,13 +1,51 @@
 const express = require('express');
 
 const router = express.Router({ mergeParams: true });
+
+// controllers
 const retroController = require('../controllers/retroController');
 
-router.post('/', (req, res, next) => {
+router.get('/', (req, res, next) => {
   retroController
-    .createTeam(req.body)
+    .getRetro()
     .then((result) => res.json(result))
     .catch(next);
+});
+
+router.get('/:id', ({ params: { id } }, res, next) => {
+  const idNumber = Number.parseInt(id, 10);
+  retroController
+    .getRetroById(idNumber)
+    .then((result) => {
+      res.json(result);
+    })
+    .catch(next);
+});
+
+router.post('/add', (req, res) => {
+  retroController
+    .addRetro(req.body)
+    .then((result) => res.json(result))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      res.status(500).send('Failed to add retro').end();
+    });
+});
+
+router.delete('/:id', (req, res) => {
+  retroController
+    .deleteRetro(req.params.id, req)
+    .then((result) => {
+      // If result is equal to 0, then that means the retro id does not exist
+      if (result === 0) {
+        res.status(404).send('The retro ID you provided does not exist.');
+      } else {
+        res.json({ success: true });
+      }
+    })
+    // eslint-disable-next-line no-console
+    .catch((error) => console.log(error));
 });
 
 module.exports = router;

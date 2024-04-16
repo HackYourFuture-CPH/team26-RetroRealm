@@ -10,7 +10,7 @@ const exampleResourcesController = require('../controllers/exampleResources.cont
 
 /**
  * @swagger
- * /exampleResource:
+ * /exampleResources:
  *  get:
  *    tags:
  *    - exampleResource

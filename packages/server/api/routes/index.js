@@ -5,6 +5,7 @@ const router = express.Router();
 const exampleResources = require('./exampleResources.router');
 const teamsRouter = require('./teams.router');
 const employeesRouter = require('./employees.router');
+const retroRouter = require('./retro.router');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -39,5 +40,7 @@ router.use('/exampleResources', exampleResources);
 router.use('/teams', teamsRouter);
 
 router.use('/employees', employeesRouter);
+
+router.use('/retro', retroRouter);
 
 module.exports = router;
