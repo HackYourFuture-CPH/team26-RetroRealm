@@ -4,7 +4,7 @@ import { apiURL } from '../../apiURL';
 import './IndexPage.css';
 import JokesRotator from '../Jokes/JokesRotator';
 
-function Index() {
+function IndexPage() {
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -18,12 +18,19 @@ function Index() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (inputValue === 'TeamCode') {
+    if (inputValue.trim() !== '') {
       try {
-        const response = await fetch(`${apiURL}/CreateNewTeam/${inputValue}`);
+        const response = await fetch(`${apiURL}/validateTeamCode`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ teamCode: inputValue }),
+        });
         if (response.ok) {
           // Navigate to retroPage
-          navigate('/JoinRetroPage');
+
+          navigate('/retroPage');
         } else {
           setErrorMessage(
             'Invalid team code. Please try again or make sure you entered the correct team code.',
@@ -96,4 +103,4 @@ function Index() {
   );
 }
 
-export default Index;
+export default IndexPage;
