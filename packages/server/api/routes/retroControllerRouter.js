@@ -1,6 +1,6 @@
 const express = require('express');
 
-const retroRouter = require('./routes/retroController');
+const retroRouter = require('./routes/retroRouter'); // Import the router, not the controller
 
 const app = express();
 
