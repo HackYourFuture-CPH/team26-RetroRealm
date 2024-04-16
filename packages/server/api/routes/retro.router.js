@@ -12,22 +12,14 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', ({ params: { id } }, res, next) => {
+  const idNumber = Number.parseInt(id, 10);
   retroController
-    .getRetroById(req.params.id)
-    .then((result) => res.json(result))
+    .getRetroById(idNumber)
+    .then((result) => {
+      res.json(result);
+    })
     .catch(next);
-});
-
-router.post('/', (req, res) => {
-  retroController
-    .createRetro(req.body)
-    .then((result) => res.json(result))
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
-      res.status(400).send('Bad request').end();
-    });
 });
 
 router.post('/add', (req, res) => {
@@ -39,13 +31,6 @@ router.post('/add', (req, res) => {
       console.log(error);
       res.status(500).send('Failed to add retro').end();
     });
-});
-
-router.post('/', (req, res, next) => {
-  retroController
-    .createTeam(req.body)
-    .then((result) => res.json(result))
-    .catch(next);
 });
 
 router.delete('/:id', (req, res) => {

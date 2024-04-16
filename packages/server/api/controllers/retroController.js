@@ -1,22 +1,42 @@
 const knex = require('../../config/db');
 const HttpError = require('../lib/utils/http-error');
-// const moment = require('moment-timezone');
 
 const getRetro = async () => {
-  return knex('Retro').select('Retro.id', 'Retro.title', 'Retro.date');
+  return knex('Retro').select(
+    'Retro.id',
+    'Retro.team_id',
+    'Retro.title',
+    'Retro.date',
+  );
 };
 
 const getRetroById = async (id) => {
-  if (!id) {
+  // eslint-disable-next-line no-console
+  console.log('getRetroById called with ID:', id);
+
+  // Validate if ID is a number
+  if (isNaN(id)) {
+    // eslint-disable-next-line no-console
+    console.log('ID is not a number');
     throw new HttpError('Id should be a number', 400);
   }
 
   try {
-    const retro = await knex('Retro')
-      .select('Retro.id as id', 'title', 'date')
+    // eslint-disable-next-line no-console
+    console.log('Fetching retro with ID:', id);
+
+    const query = knex('Retro')
+      .select('Retro.id as id', 'title', 'date', 'team_id')
       .where({ id });
+    // eslint-disable-next-line no-console
+    console.log('SQL Query:', query.toString());
+
+    const retro = await query;
+    // eslint-disable-next-line no-console
+    console.log('Retrieved Retro:', retro);
+
     if (retro.length === 0) {
-      throw new Error(`incorrect entry with the id of ${id}`, 404);
+      throw new Error(`No retro entry found with the ID ${id}`);
     }
     return retro;
   } catch (error) {
@@ -24,55 +44,28 @@ const getRetroById = async (id) => {
   }
 };
 
-const deleteRetro = async (retroId) => {
-  return knex('Retro').where({ id: retroId }).del();
-};
-
-const createRetro = async (body) => {
-  await knex('Retro').insert({
-    title: body.title,
-    date: body.date,
-    team_id: 1,
-  });
-
-  return {
-    successful: true,
-  };
-};
-
 const addRetro = async (body) => {
   try {
-    const retro = await createRetro(body);
-    return retro;
+    await knex('Retro').insert({
+      title: body.title,
+      date: body.date,
+      team_id: 1,
+    });
+    return {
+      successful: true,
+    };
   } catch (error) {
     throw new HttpError('Failed to add retro', 500);
   }
 };
 
-const createSampleRetro = async () => {
-  const newRetro = {
-    teamId: '1',
-    title: 'New Retro Title',
-    date: '2024-04-12',
-  };
-
-  try {
-    await createRetro(newRetro);
-    // eslint-disable-next-line no-console
-    console.log('Retro created successfully.');
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error creating retro:', error.message);
-  }
+const deleteRetro = async (retroId) => {
+  return knex('Retro').where({ id: retroId }).del();
 };
-
-// Call the async function
-createSampleRetro();
 
 module.exports = {
   getRetro,
   getRetroById,
-  deleteRetro,
-  createRetro,
   addRetro,
+  deleteRetro,
 };
