@@ -15,7 +15,7 @@ function RetroPage() {
   const [comments, setComments] = useState({});
   const [joinCode, setJoinCode] = useState('');
   const [inputValues, setInputValues] = useState({});
-  const [selectedRole, setSelectedRole] = useState('');
+  const [selectedRoles, setSelectedRoles] = useState({});
   const navigate = useNavigate();
 
   const handleNewRetro = async () => {
@@ -41,7 +41,7 @@ function RetroPage() {
   };
 
   const handleComplete = () => {
-    navigate('/retropage');
+    navigate('/retro');
   };
 
   const handleJoin =
@@ -88,17 +88,19 @@ function RetroPage() {
   return (
     <div>
       <div className="retroContainer">
-        <h2>Retro</h2>
+        <h2 className="retroTitle">Retro</h2>
         <div className="newRetroContainer">
           <button
             className="newRetroButton"
             type="button"
             onClick={handleNewRetro}
           >
-            New Retro
+            Start Retro
           </button>
         </div>
-        {retroCode && <p>Retro code: {retroCode}</p>}
+        {retroCode && (
+          <p className="retroCodeButton">Retro code: {retroCode}</p>
+        )}
         <input
           className="joinCodeInput"
           type="text"
@@ -111,10 +113,10 @@ function RetroPage() {
         </button>
       </div>
       <div className="questionsContainer">
-        {selectedQuestions.map((question) => (
-          <div key={question.id} className="container">
+        {selectedQuestions.map((question, index) => (
+          <div key={question.id} className={`container container${index + 1}`}>
             <div className="question">{question.text}</div>
-            <div className="box">
+            <div className={`box box${index + 1}`}>
               {comments[question.id] &&
                 comments[question.id].map((comment) => (
                   <div key={comment.id} className="comment">
@@ -124,8 +126,13 @@ function RetroPage() {
               <div className="commentInputContainer">
                 <select
                   className="roleSelect"
-                  value={selectedRole}
-                  onChange={(e) => setSelectedRole(e.target.value)}
+                  value={selectedRoles[question.id] || ''}
+                  onChange={(e) =>
+                    setSelectedRoles((prevRoles) => ({
+                      ...prevRoles,
+                      [question.id]: e.target.value,
+                    }))
+                  }
                 >
                   <option value="">Select role</option>
                   <option value="teamMember">Team Member</option>

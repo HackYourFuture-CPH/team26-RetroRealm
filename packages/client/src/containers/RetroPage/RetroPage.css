@@ -13,53 +13,21 @@ body {
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px; /* Adjust the value as needed */
+  margin-bottom: 5px;
   margin-top: 50px;
   margin-left: 10px;
 }
 
 .retro-header {
-  /* display: inline-block; */
-  /* justify-content: space-between; */
   align-items: center;
   color: rgb(5, 5, 5);
-  margin-top: 50px;
+  margin-top: 90px;
   font-size: 40px;
-}
-.team-button,
-.input-button,
-.past-button,
-.update-button,
-.start-button,
-.submit-button {
-  /* display: inline-block; */
-  justify-content: space-between;
-  margin-right: 10px;
-  margin-left: 10px;
-  height: 30px;
-  width: 180px;
-  align-items: center;
-  color: white;
-  border-radius: 4px;
-  margin-bottom: 30px;
-  margin-top: 30px;
 }
 
 .input-button {
-  /* padding-left: 53px; */
-  /* width: 10px; */
-  /* margin-left: 22%; */
-  color: yellow;
   background-color: rgb(207, 231, 201);
-}
-.input[type='text'],
-input[type='email'],
-select {
-  width: 15%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-top: 30px;
 }
 
 .submit-button {
@@ -82,89 +50,144 @@ select {
   cursor: pointer;
   border-radius: 5px;
 }
+
 .retroContainer {
-  margin-bottom: 20px;
+  display: flex;
+  background-color: #49c365;
+  border-radius: 5px;
+  margin-top: 50px;
+  padding-left: 2%;
+  width: 60%;
+  align-items: center;
+  margin-left: 20%;
+}
+.retroTitle {
+  font-size: 25px;
+  font-weight: bold;
+  padding-right: 10px;
+  margin-bottom: 35px;
 }
 
 .newRetroContainer {
   display: inline-block;
-  width: 190px;
+  width: 110px;
   height: 60px;
 }
 
-.newRetroButton {
-  margin-right: 10px;
+.newRetroButton,
+.joinButton {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.newRetroButton:hover,
+.joinButton:hover {
+  background-color: #0056b3;
+}
+
+.retroCodeButton {
+  margin-left: 10px;
 }
 
 .joinCodeInput {
-  width: 90px;
-  color: #8909ec;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  width: 80px;
+  margin-left: 22px;
 }
 
 .questionsContainer {
-  margin-top: 20px;
-
+  margin-top: 10px;
+  height: 500px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
   gap: 3.5rem;
+  width: 50%;
+  margin-left: 24%;
 }
 
 .joinButton {
-  margin-bottom: 7%;
-  gap: 1.5rem;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.container1 {
-  background-color: red;
-}
-
-.container2 {
-  background-color: blue;
-}
-
-.container3 {
-  background-color: green;
-}
-
-.container4 {
-  background-color: yellow;
+  margin-top: 5px;
+  margin-left: 10%;
+  margin-right: 50px;
+  margin-bottom: 10px;
+  width: 85px;
 }
 
 .question {
   margin-bottom: 10%;
   font-weight: bold;
+  margin-top: 10%;
 }
 
 .box {
-  display: inline-block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-height: 150px;
+  overflow: auto;
+  height: 150px;
+  margin-left: 20px;
+}
+
+.box1 {
+  background-color: rgb(244, 77, 77);
+  border-radius: 10px;
+}
+
+.box2 {
+  background-color: rgb(0, 255, 47);
+  border-radius: 10px;
+}
+
+.box3 {
+  background-color: rgb(125, 122, 121);
+  border-radius: 10px;
+}
+
+.box4 {
+  background-color: yellow;
+  border-radius: 10px;
 }
 
 .comment {
   margin-right: 10px;
+  margin-top: 5px;
 }
 
 .commentInputContainer {
-  display: inline-block;
-  width: 50%;
-  margin-left: 21%;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-left: 3%;
+  margin-top: auto;
+}
+
+.roleSelect,
+.commentInput,
+.addCommentButton {
+  margin-right: 10px;
 }
 
 .roleSelect {
-  width: 90px;
-  margin-right: 10px;
+  width: 140px;
+  margin-bottom: 2%;
 }
 
 .commentInput {
-  width: 43%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ce760b;
-  border-radius: 5px;
+  margin-bottom: 5%;
 }
 
 .addCommentButton {
-  width: 10px;
-  margin-right: 10px;
+  margin-bottom: 5%;
+}
+
+.completeButton {
+  margin-top: 20%;
+  margin-bottom: 10%;
 }

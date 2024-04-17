@@ -5,8 +5,8 @@
     orange,
     yellow,
     green,
-    blue,
-    indigo,
+    rgb(174, 174, 194),
+    rgb(98, 73, 116),
     violet
   );
   height: 60px;
