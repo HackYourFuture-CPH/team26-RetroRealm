@@ -7,9 +7,45 @@ const retroController = require('../controllers/retroController');
 
 router.get('/', (req, res, next) => {
   retroController
-    .getRetro()
+    .getRetros(req.query)
     .then((result) => res.json(result))
     .catch(next);
+});
+
+// Create a new retro
+router.post('/', (req, res) => {
+  retroController
+    .addRetro(req.body)
+    .then((result) => res.json(result))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      res.status(500).send('Failed to add retro').end();
+    });
+});
+
+// Complete a retro
+router.post('/:retroId/complete', (req, res) => {
+  retroController
+    .completeRetro(req.params, req.body)
+    .then((result) => res.json(result))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      res.status(500).send('Failed to complete the retro').end();
+    });
+});
+
+// Join a retro
+router.get('/join/:retroCode', (req, res) => {
+  retroController
+    .joinRetro(req.params)
+    .then((result) => res.json(result))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      res.status(500).send('Failed to join the retro').end();
+    });
 });
 
 router.get('/:id', ({ params: { id } }, res, next) => {
@@ -20,17 +56,6 @@ router.get('/:id', ({ params: { id } }, res, next) => {
       res.json(result);
     })
     .catch(next);
-});
-
-router.post('/add', (req, res) => {
-  retroController
-    .addRetro(req.body)
-    .then((result) => res.json(result))
-    .catch((error) => {
-      // eslint-disable-next-line no-console
-      console.log(error);
-      res.status(500).send('Failed to add retro').end();
-    });
 });
 
 router.delete('/:id', (req, res) => {

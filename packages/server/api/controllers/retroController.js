@@ -1,13 +1,13 @@
 const knex = require('../../config/db');
 const HttpError = require('../lib/utils/http-error');
+const { randomUUID } = require('node:crypto');
 
-const getRetro = async () => {
-  return knex('Retro').select(
-    'Retro.id',
-    'Retro.team_id',
-    'Retro.title',
-    'Retro.date',
-  );
+const getRetros = async (queryParams) => {
+  return knex('Retro')
+    .select('Retro.id', 'Retro.team_id', 'Retro.title', 'Retro.date')
+    .where({
+      team_id: queryParams.teamId,
+    });
 };
 
 const getRetroById = async (id) => {
@@ -46,15 +46,26 @@ const getRetroById = async (id) => {
 
 const addRetro = async (body) => {
   try {
-    await knex('Retro').insert({
-      title: body.title,
-      date: body.date,
-      team_id: 1,
-    });
+    const retroCode = randomUUID();
+
+    const result = await knex('Retro')
+      .insert({
+        title: body.title,
+        date: new Date(),
+        team_id: body.teamId,
+        retro_code: retroCode,
+        status: 'in-progress',
+      })
+      .returning('id');
+
     return {
+      retroId: result[0],
+      retroCode,
       successful: true,
     };
   } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
     throw new HttpError('Failed to add retro', 500);
   }
 };
@@ -63,9 +74,49 @@ const deleteRetro = async (retroId) => {
   return knex('Retro').where({ id: retroId }).del();
 };
 
+const completeRetro = async (routeParams, body) => {
+  try {
+    const answers = body.map((memberAnswer) => ({
+      retro_id: routeParams.retroId,
+      question_id: memberAnswer.questionId,
+      answer: memberAnswer.answer,
+      team_member_id: memberAnswer.teamMemberId,
+    }));
+
+    await knex('Answers').insert(answers);
+
+    await knex('Retro')
+      .update({
+        status: 'completed',
+      })
+      .where('id', routeParams.retroId);
+
+    return {
+      successful: true,
+    };
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    throw new HttpError('Failed to complete retro', 500);
+  }
+};
+
+const joinRetro = async (routeParams) => {
+  const results = await knex('Retro')
+    .select('Retro.id', 'Retro.team_id', 'Retro.title', 'Retro.date')
+    .where({
+      retro_code: routeParams.retroCode,
+      status: 'in-progress',
+    });
+
+  return results[0];
+};
+
 module.exports = {
-  getRetro,
+  getRetros,
   getRetroById,
   addRetro,
   deleteRetro,
+  completeRetro,
+  joinRetro,
 };
