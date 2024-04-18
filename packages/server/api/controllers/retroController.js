@@ -101,6 +101,12 @@ const completeRetro = async (routeParams, body) => {
   }
 };
 
+const generateRetroCode = async () => {
+  // Generate a UUID using the randomUUID() function
+  const retroCode = randomUUID();
+  return retroCode;
+};
+
 const joinRetro = async (routeParams) => {
   const results = await knex('Retro')
     .select('Retro.id', 'Retro.team_id', 'Retro.title', 'Retro.date')
@@ -119,4 +125,5 @@ module.exports = {
   deleteRetro,
   completeRetro,
   joinRetro,
+  generateRetroCode,
 };

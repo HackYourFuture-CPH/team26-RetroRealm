@@ -11,12 +11,12 @@ export default function JoinRetroPage() {
   const [retroCodeValue, setRetroCode] = useState('');
   const [isValidRetroCode, setIsValidRetroCode] = useState(false);
 
-  const updateRetro = () => {
-    navigate('/UpdateTeam');
+  const updateTeam = () => {
+    navigate('*');
   };
 
   const pastRetro = () => {
-    navigate('/PastRetros');
+    navigate('/retros/past');
   };
 
   const initializeRetroSession = async () => {
@@ -24,8 +24,6 @@ export default function JoinRetroPage() {
     setError(null);
     try {
       const response = await fetch(`${apiURL()}/generateRetroCode`, {
-        // Call the backend endpoint to generate retro code
-
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,24 +54,19 @@ export default function JoinRetroPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${apiURL()}/validateRetroCode`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ retroCode: retroCodeValue }),
-      });
+      await initializeRetroSession(); // generate and validate a new retro code
 
-      if (response.ok) {
+      if (isValidRetroCode) {
         // Retro code is valid, navigate to the next page or perform further actions
-        navigate(`/retropage/${retroCodeValue}`);
+        navigate(`/retro/${retroCodeValue}`);
       } else {
         // Retro code is invalid, handle accordingly
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Invalid retro code');
+        throw new Error('Invalid retro code');
       }
     } catch (catchError) {
       setError(catchError.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,9 +89,9 @@ export default function JoinRetroPage() {
       <button
         className="retro-button update-button"
         type="button"
-        onClick={updateRetro}
+        onClick={updateTeam}
       >
-        Update Retro
+        Update Team
       </button>
       <button
         className="retro-button past-button"
@@ -118,7 +111,7 @@ export default function JoinRetroPage() {
         className="retro-button submit-button"
         type="button"
         onClick={handleSubmit}
-        disabled={!retroCodeValue || loading || !isValidRetroCode}
+        disabled={!retroCodeValue.trim() || loading || !isValidRetroCode}
       >
         Submit
       </button>

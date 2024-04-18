@@ -8,6 +8,7 @@ import { RetroManagementPage } from './containers/RetroManagement/RetroManagemen
 import CreateTeam from './containers/CreateTeamPage/CreateTeam';
 import { PastRetroPage } from './containers/PastRetroPage/PastRetroPage';
 import IndexPage from './containers/IndexPage/IndexPage';
+import JoinRetroPage from './containers/JoinRetroPage/JoinRetroPage';
 
 function App() {
   return (
@@ -15,13 +16,14 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/retro" element={<RetroPage />} />
           <Route path="/" element={<IndexPage />} />
           <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/retromanagement" element={<RetroManagementPage />} />
+          <Route path="/joinretro" element={<JoinRetroPage />} />
+          <Route path="/retro" element={<RetroPage />} />
           <Route path="/retros/past" element={<PastRetroPage />} />
+          <Route path="/retromanagement" element={<RetroManagementPage />} />
           <Route path="/retros/:retroID" element={<RetroPage />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </div>

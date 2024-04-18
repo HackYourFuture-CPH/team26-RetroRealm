@@ -41,7 +41,7 @@ function RetroPage() {
   };
 
   const handleComplete = () => {
-    navigate('/retro');
+    navigate('/joinretro');
   };
 
   const handleJoin =
