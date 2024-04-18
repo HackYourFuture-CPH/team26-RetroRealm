@@ -2,7 +2,7 @@ exports.seed = function (knex) {
   // Deletes all existing entries
   return knex('Questions')
     .del()
-    .then(function () {
+    .then(() => {
       // Inserts seed entries
       return knex('Questions').insert([
         { id: 1, title: 'What went well?', color: 'green' },
