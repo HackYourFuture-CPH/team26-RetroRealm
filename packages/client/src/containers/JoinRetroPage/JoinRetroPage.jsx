@@ -23,7 +23,7 @@ export default function JoinRetroPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${apiURL()}/generateRetroCode`, {
+      const response = await fetch(`${apiURL()}/retro/generateRetroCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
