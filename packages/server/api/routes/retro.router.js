@@ -85,4 +85,11 @@ router.delete('/:id', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// Error handling middleware
+router.use((err, req, res) => {
+  // eslint-disable-next-line no-console
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
 module.exports = router;

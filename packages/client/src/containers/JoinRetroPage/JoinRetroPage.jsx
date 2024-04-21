@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiURL } from '../../apiURL';
 import './JoinRetroPage.css';
+import { RetroCodeContext } from '../Contexts/RetroCodeContext';
 
 export default function JoinRetroPage() {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ export default function JoinRetroPage() {
   const [error, setError] = useState(null);
   const [retroCodeValue, setRetroCode] = useState('');
   const [isValidRetroCode, setIsValidRetroCode] = useState(false);
+  const { setRetroCode: setSharedRetroCode } = useContext(RetroCodeContext);
 
   const updateTeam = () => {
     navigate('*');
@@ -32,6 +34,7 @@ export default function JoinRetroPage() {
 
       if (response.ok) {
         const retroCode = await response.text();
+        setSharedRetroCode(retroCode);
         setRetroCode(retroCode);
         setCurrentDate(new Date().toLocaleDateString());
         setIsValidRetroCode(true);
@@ -57,7 +60,6 @@ export default function JoinRetroPage() {
       await initializeRetroSession(); // generate and validate a new retro code
 
       if (isValidRetroCode) {
-        // Retro code is valid, navigate to the next page or perform further actions
         navigate(`/retro/${retroCodeValue}`);
       } else {
         // Retro code is invalid, handle accordingly
@@ -105,7 +107,11 @@ export default function JoinRetroPage() {
         type="text"
         placeholder="Enter Retro Code"
         value={retroCodeValue}
-        onChange={(e) => setRetroCode(e.target.value)}
+        onChange={(e) => {
+          const newRetroCode = e.target.value;
+          setRetroCode(newRetroCode);
+          setSharedRetroCode(newRetroCode);
+        }}
       />
       <button
         className="retro-button submit-button"
