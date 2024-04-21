@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiURL } from '../../apiURL';
 import './JoinRetroPage.css';
+import { RetroCodeContext } from '../Contexts/RetroCodeContext';
 
 export default function JoinRetroPage() {
   const navigate = useNavigate();
@@ -10,22 +11,21 @@ export default function JoinRetroPage() {
   const [error, setError] = useState(null);
   const [retroCodeValue, setRetroCode] = useState('');
   const [isValidRetroCode, setIsValidRetroCode] = useState(false);
+  const { setRetroCode: setSharedRetroCode } = useContext(RetroCodeContext);
 
-  const updateRetro = () => {
-    navigate('/UpdateTeam');
+  const updateTeam = () => {
+    navigate('*');
   };
 
   const pastRetro = () => {
-    navigate('/PastRetros');
+    navigate('/retros/past');
   };
 
   const initializeRetroSession = async () => {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${apiURL()}/generateRetroCode`, {
-        // Call the backend endpoint to generate retro code
-
+      const response = await fetch(`${apiURL()}/retro/generateRetroCode`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,6 +34,7 @@ export default function JoinRetroPage() {
 
       if (response.ok) {
         const retroCode = await response.text();
+        setSharedRetroCode(retroCode);
         setRetroCode(retroCode);
         setCurrentDate(new Date().toLocaleDateString());
         setIsValidRetroCode(true);
@@ -56,24 +57,18 @@ export default function JoinRetroPage() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`${apiURL()}/validateRetroCode`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ retroCode: retroCodeValue }),
-      });
+      await initializeRetroSession(); // generate and validate a new retro code
 
-      if (response.ok) {
-        // Retro code is valid, navigate to the next page or perform further actions
-        navigate(`/retropage/${retroCodeValue}`);
+      if (isValidRetroCode) {
+        navigate(`/retro/${retroCodeValue}`);
       } else {
         // Retro code is invalid, handle accordingly
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Invalid retro code');
+        throw new Error('Invalid retro code');
       }
     } catch (catchError) {
       setError(catchError.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -96,9 +91,9 @@ export default function JoinRetroPage() {
       <button
         className="retro-button update-button"
         type="button"
-        onClick={updateRetro}
+        onClick={updateTeam}
       >
-        Update Retro
+        Update Team
       </button>
       <button
         className="retro-button past-button"
@@ -112,13 +107,17 @@ export default function JoinRetroPage() {
         type="text"
         placeholder="Enter Retro Code"
         value={retroCodeValue}
-        onChange={(e) => setRetroCode(e.target.value)}
+        onChange={(e) => {
+          const newRetroCode = e.target.value;
+          setRetroCode(newRetroCode);
+          setSharedRetroCode(newRetroCode);
+        }}
       />
       <button
         className="retro-button submit-button"
         type="button"
         onClick={handleSubmit}
-        disabled={!retroCodeValue || loading || !isValidRetroCode}
+        disabled={!retroCodeValue.trim() || loading || !isValidRetroCode}
       >
         Submit
       </button>

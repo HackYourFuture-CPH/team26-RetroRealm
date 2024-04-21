@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RetroCodeContext } from '../Contexts/RetroCodeContext';
+import { apiURL } from '../../apiURL';
 import './RetroPage.css';
 
 const questions = [
@@ -10,18 +12,30 @@ const questions = [
 ];
 
 function RetroPage() {
-  const [retroCode, setRetroCode] = useState(null);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [comments, setComments] = useState({});
   const [joinCode, setJoinCode] = useState('');
   const [inputValues, setInputValues] = useState({});
   const [selectedRoles, setSelectedRoles] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+  const { retroCode, setRetroCode } = useContext(RetroCodeContext);
 
   const handleNewRetro = async () => {
-    const newRetroCode = Math.random().toString(36).substring(2, 10);
-    setRetroCode(newRetroCode);
-    setSelectedQuestions(questions);
+    const response = await fetch(`${apiURL()}/retro/generateRetroCode`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      const newRetroCode = await response.text();
+      setRetroCode(newRetroCode);
+      setSelectedQuestions(questions);
+    } else {
+      throw new Error('Invalid retro code');
+    }
   };
 
   const handleAddComment = async (questionId) => {
@@ -41,38 +55,36 @@ function RetroPage() {
   };
 
   const handleComplete = () => {
-    navigate('/retro');
+    navigate('/joinretro');
   };
 
-  const handleJoin =
-    (async () => {
-      try {
-        if (!joinCode) {
-          return;
-        }
+  const handleJoin = async () => {
+    try {
+      if (!joinCode) {
+        return;
+      }
 
-        const response = await fetch(`/api/retros/${joinCode}`);
+      const response = await fetch(`${apiURL()}/retro/join/${joinCode}`);
 
-        if (!response.ok) {
-          throw new Error(
-            `Failed to fetch retro session: ${response.statusText}`,
-          );
-        }
-
-        const retroSession = await response.json();
-
-        setRetroCode(retroSession.retroCode);
-        setSelectedQuestions(retroSession.questions);
-        setComments(retroSession.comments);
-        setJoinCode('');
-      } catch (error) {
-        // eslint-disable-next-line no-alert
-        alert(
-          'Failed to join the retro session. Please check the code and try again.',
+      if (!response.ok) {
+        throw new Error(
+          `Failed to fetch retro session: ${response.statusText}`,
         );
       }
-    },
-    [joinCode]);
+
+      const retroSession = await response.json();
+
+      setRetroCode(retroSession.retroCode);
+      setSelectedQuestions(retroSession.questions);
+      setComments(retroSession.comments || {});
+      setJoinCode('');
+      setErrorMessage('');
+    } catch (error) {
+      setErrorMessage(
+        'Failed to join the retro session. Please check the code and try again.',
+      );
+    }
+  };
 
   const handleCommentInput = (questionId, e) => {
     if (e.key === 'Enter') {
@@ -89,13 +101,14 @@ function RetroPage() {
     <div>
       <div className="retroContainer">
         <h2 className="retroTitle">Retro</h2>
+        {errorMessage && <div className="errorMessage">{errorMessage}</div>}
         <div className="newRetroContainer">
           <button
             className="newRetroButton"
             type="button"
             onClick={handleNewRetro}
           >
-            Start Retro
+            New Retro
           </button>
         </div>
         {retroCode && (
