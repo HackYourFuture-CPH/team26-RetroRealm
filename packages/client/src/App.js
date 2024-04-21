@@ -15,7 +15,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/retro" element={<RetroPage />} />
+          <Route path="/:teamId/retro" element={<RetroPage />} />
           <Route path="/" element={<IndexPage />} />
           <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
           <Route path="*" element={<PageNotFound />} />
