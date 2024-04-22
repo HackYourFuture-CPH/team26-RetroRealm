@@ -8,22 +8,28 @@ import { RetroManagementPage } from './containers/RetroManagement/RetroManagemen
 import CreateTeam from './containers/CreateTeamPage/CreateTeam';
 import { PastRetroPage } from './containers/PastRetroPage/PastRetroPage';
 import IndexPage from './containers/IndexPage/IndexPage';
+import JoinRetroPage from './containers/JoinRetroPage/JoinRetroPage';
+import { RetroCodeProvider } from './containers/Contexts/RetroCodeProvider';
 
 function App() {
   return (
     <div className="app">
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/:teamId/retro" element={<RetroPage />} />
-          <Route path="/" element={<IndexPage />} />
-          <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/retromanagement" element={<RetroManagementPage />} />
-          <Route path="/retros/past" element={<PastRetroPage />} />
-          <Route path="/retros/:retroID" element={<RetroPage />} />
-        </Routes>
-      </Router>
+      <RetroCodeProvider>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<IndexPage />} />
+            <Route path="/:teamId/retro" element={<RetroPage />} />
+            <Route path="/CreateNewTeamPage" element={<CreateTeam />} />
+            <Route path="/joinretro" element={<JoinRetroPage />} />
+            <Route path="/retro" element={<RetroPage />} />
+            <Route path="/retros/past" element={<PastRetroPage />} />
+            <Route path="/retromanagement" element={<RetroManagementPage />} />
+            <Route path="/retro/:retroID" element={<RetroPage />} />
+            <Route path="*" element={<PageNotFound />} />
+          </Routes>
+        </Router>
+      </RetroCodeProvider>
     </div>
   );
 }

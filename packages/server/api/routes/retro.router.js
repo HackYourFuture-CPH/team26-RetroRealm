@@ -12,6 +12,18 @@ router.get('/', (req, res, next) => {
     .catch(next);
 });
 
+// Generate a new retro code
+router.post('/generateRetroCode', (req, res) => {
+  retroController
+    .generateRetroCode()
+    .then((result) => res.json(result))
+    .catch((error) => {
+      // eslint-disable-next-line no-console
+      console.log(error);
+      res.status(500).send('Failed to generate retro code').end();
+    });
+});
+
 // Create a new retro
 router.post('/', (req, res) => {
   retroController
@@ -71,6 +83,13 @@ router.delete('/:id', (req, res) => {
     })
     // eslint-disable-next-line no-console
     .catch((error) => console.log(error));
+});
+
+// Error handling middleware
+router.use((err, req, res) => {
+  // eslint-disable-next-line no-console
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 module.exports = router;

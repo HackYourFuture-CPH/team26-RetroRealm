@@ -101,13 +101,36 @@ const completeRetro = async (routeParams, body) => {
   }
 };
 
-const joinRetro = async (routeParams) => {
+const generateRetroCode = async () => {
+  // Generate a single 8-character retro code without been inside a double-quoted string
+  const retroCode = String(randomUUID()).substring(0, 8);
+  return retroCode;
+};
+
+const joinRetro = async (routeParams, userId) => {
+  // Check if the user has already joined the retro session
+  const alreadyJoined = await knex('RetroParticipants')
+    .where({
+      retro_id: routeParams.retroCode,
+      user_id: userId,
+    })
+    .first();
+
+  if (alreadyJoined) {
+    throw new HttpError('You have already joined this retro session', 400);
+  }
+
   const results = await knex('Retro')
     .select('Retro.id', 'Retro.team_id', 'Retro.title', 'Retro.date')
     .where({
       retro_code: routeParams.retroCode,
-      status: 'in-progress',
     });
+
+  // Add the user to the retro session
+  await knex('RetroParticipants').insert({
+    retro_id: results[0].id,
+    user_id: userId,
+  });
 
   return results[0];
 };
@@ -119,4 +142,5 @@ module.exports = {
   deleteRetro,
   completeRetro,
   joinRetro,
+  generateRetroCode,
 };
