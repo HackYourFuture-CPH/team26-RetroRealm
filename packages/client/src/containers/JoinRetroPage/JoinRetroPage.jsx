@@ -33,7 +33,8 @@ export default function JoinRetroPage() {
       });
 
       if (response.ok) {
-        const retroCode = await response.text();
+        const json = await response.json();
+        const retroCode = json.code;
         setSharedRetroCode(retroCode);
         setRetroCode(retroCode);
         setCurrentDate(new Date().toLocaleDateString());
@@ -57,8 +58,6 @@ export default function JoinRetroPage() {
     setLoading(true);
     setError(null);
     try {
-      await initializeRetroSession(); // generate and validate a new retro code
-
       if (isValidRetroCode) {
         navigate(`/retro/${retroCodeValue}`);
       } else {
@@ -111,13 +110,13 @@ export default function JoinRetroPage() {
           const newRetroCode = e.target.value;
           setRetroCode(newRetroCode);
           setSharedRetroCode(newRetroCode);
+          setIsValidRetroCode(true);
         }}
       />
       <button
         className="retro-button submit-button"
         type="button"
         onClick={handleSubmit}
-        disabled={!retroCodeValue.trim() || loading || !isValidRetroCode}
       >
         Submit
       </button>

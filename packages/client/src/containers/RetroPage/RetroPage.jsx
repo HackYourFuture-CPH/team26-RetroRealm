@@ -12,7 +12,6 @@ const questions = [
 ];
 
 function RetroPage() {
-  const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [comments, setComments] = useState({});
   const [joinCode, setJoinCode] = useState('');
   const [inputValues, setInputValues] = useState({});
@@ -32,7 +31,6 @@ function RetroPage() {
     if (response.ok) {
       const newRetroCode = await response.text();
       setRetroCode(newRetroCode);
-      setSelectedQuestions(questions);
     } else {
       throw new Error('Invalid retro code');
     }
@@ -75,7 +73,6 @@ function RetroPage() {
       const retroSession = await response.json();
 
       setRetroCode(retroSession.retroCode);
-      setSelectedQuestions(retroSession.questions);
       setComments(retroSession.comments || {});
       setJoinCode('');
       setErrorMessage('');
@@ -126,7 +123,7 @@ function RetroPage() {
         </button>
       </div>
       <div className="questionsContainer">
-        {selectedQuestions.map((question, index) => (
+        {questions.map((question, index) => (
           <div key={question.id} className={`container container${index + 1}`}>
             <div className="question">{question.text}</div>
             <div className={`box box${index + 1}`}>

@@ -16,7 +16,7 @@ router.get('/', (req, res, next) => {
 router.post('/generateRetroCode', (req, res) => {
   retroController
     .generateRetroCode()
-    .then((result) => res.json(result))
+    .then((result) => res.json({ code: result }))
     .catch((error) => {
       // eslint-disable-next-line no-console
       console.log(error);
