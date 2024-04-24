@@ -10,4 +10,11 @@ router.post('/', (req, res, next) => {
     .catch(next);
 });
 
+router.post('/validateTeamCode', (req, res, next) => {
+  teamsController
+    .validateTeamCode(req.body)
+    .then((result) => res.json(result))
+    .catch(next);
+});
+
 module.exports = router;

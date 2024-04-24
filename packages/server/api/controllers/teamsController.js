@@ -49,6 +49,19 @@ const createTeam = async (body) => {
   };
 };
 
+const validateTeamCode = async (body) => {
+  const { teamCode } = body;
+
+  const results = await knex('Teams').where({ team_code: teamCode });
+
+  if (results.length === 0) {
+    throw new Error('Team not found');
+  }
+
+  return results[0];
+};
+
 module.exports = {
   createTeam,
+  validateTeamCode,
 };

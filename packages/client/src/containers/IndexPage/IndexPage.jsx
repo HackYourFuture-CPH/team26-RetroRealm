@@ -20,7 +20,7 @@ function IndexPage() {
 
     if (inputValue.trim() !== '') {
       try {
-        const response = await fetch(`${apiURL}/validateTeamCode`, {
+        const response = await fetch(`${apiURL()}/teams/validateTeamCode`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -30,7 +30,9 @@ function IndexPage() {
         if (response.ok) {
           // Navigate to retroPage
 
-          navigate('/retroPage');
+          const body = await response.json();
+
+          navigate(`${body.id}/retro`);
         } else {
           setErrorMessage(
             'Invalid team code. Please try again or make sure you entered the correct team code.',
