@@ -17,4 +17,11 @@ router.post('/validateTeamCode', (req, res, next) => {
     .catch(next);
 });
 
+router.get('/:teamId', (req, res, next) => {
+  teamsController
+    .getTeamMembers(req.params)
+    .then((result) => res.json(result))
+    .catch(next);
+});
+
 module.exports = router;
