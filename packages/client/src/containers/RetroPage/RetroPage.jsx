@@ -17,7 +17,7 @@ function RetroPage() {
   const [joinCode, setJoinCode] = useState('');
   const [inputValues, setInputValues] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
-  // const navigate = useNavigate();
+
   const { retroCode, setRetroCode } = useContext(RetroCodeContext);
   const [retroId, setRetroId] = useState();
   const [teamMembers, setTeamMembers] = useState([]);
@@ -77,7 +77,6 @@ function RetroPage() {
   };
 
   const handleComplete = async () => {
-    // navigate('/joinretro');
     const payload = Object.values(comments).reduce(
       (answersArray, commentsArray) => {
         answersArray.push(...commentsArray);
@@ -189,12 +188,6 @@ function RetroPage() {
                 <select
                   className="roleSelect"
                   value={activeMember}
-                  // onChange={(e) =>
-                  //   setSelectedRoles((prevRoles) => ({
-                  //     ...prevRoles,
-                  //     [question.id]: e.target.value,
-                  //   }))
-                  // }
                   onChange={(e) => {
                     setActiveMember(e.target.value);
                   }}
