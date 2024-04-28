@@ -10,6 +10,8 @@ import { PastRetroPage } from './containers/PastRetroPage/PastRetroPage';
 import IndexPage from './containers/IndexPage/IndexPage';
 import JoinRetroPage from './containers/JoinRetroPage/JoinRetroPage';
 import { RetroCodeProvider } from './containers/Contexts/RetroCodeProvider';
+import ContactUs from './containers/ContactUsPage/ContactUsPage';
+import AboutUs from './containers/AboutUsPage/AboutUsPage';
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
             <Route path="/retromanagement" element={<RetroManagementPage />} />
             <Route path="/retro/:retroID" element={<RetroPage />} />
             <Route path="*" element={<PageNotFound />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/about" element={<AboutUs />} />
           </Routes>
         </Router>
       </RetroCodeProvider>
