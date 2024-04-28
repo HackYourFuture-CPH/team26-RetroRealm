@@ -16,16 +16,16 @@
     "prettier:fix": "yarn prettier --write",
     "lint": "yarn workspaces run lint",
     "lint:fix": "yarn lint --fix",
-    "stylelint:check": "yarn stylelint \"**/*.css\"",
-    "stylelint:fix": "yarn stylelint \"**/*.css\" --fix",
+    "stylelint:check": "yarn stylelint \"packages/client/src/**/**/*.css\"",
+    "stylelint:fix": "yarn stylelint \"packages/client/src/**/**/*.css\" --fix",
     "validate": "yarn prettier:check && yarn lint && yarn stylelint:check",
     "fix": "yarn prettier:fix && yarn lint:fix && yarn stylelint:fix",
     "prepare": "husky install"
   },
   "devDependencies": {
-    "eslint-plugin-prettier": "^4.0.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "husky": "^7.0.4",
     "lint-staged": "^12.4.0",
     "prettier": "^2.6.2",
@@ -44,5 +44,8 @@
     "**/*.+(css)": [
       "yarn stylelint:check"
     ]
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.5.2"
   }
 }
