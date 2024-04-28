@@ -79,7 +79,7 @@ const completeRetro = async (routeParams, body) => {
     const answers = body.map((memberAnswer) => ({
       retro_id: routeParams.retroId,
       question_id: memberAnswer.questionId,
-      answer: memberAnswer.answer,
+      answer: memberAnswer.text,
       team_member_id: memberAnswer.teamMemberId,
     }));
 

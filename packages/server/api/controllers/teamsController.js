@@ -61,7 +61,22 @@ const validateTeamCode = async (body) => {
   return results[0];
 };
 
+const getTeamMembers = async (params) => {
+  const { teamId } = params;
+
+  const results = await knex.raw(`
+  select \`Employees\`.first_name, \`Employees\`.last_name, \`TeamMembers\`.id from \`Employees\` 
+inner join \`TeamMembers\` on \`TeamMembers\`.employee_id = \`Employees\`.id
+where \`TeamMembers\`.team_id = ${Number(teamId)}
+  `);
+
+  return {
+    teamMembers: results[0],
+  };
+};
+
 module.exports = {
   createTeam,
   validateTeamCode,
+  getTeamMembers,
 };

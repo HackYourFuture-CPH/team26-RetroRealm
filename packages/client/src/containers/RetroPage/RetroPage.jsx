@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { RetroCodeContext } from '../Contexts/RetroCodeContext';
 import { apiURL } from '../../apiURL';
 import './RetroPage.css';
@@ -16,23 +16,40 @@ function RetroPage() {
   const [comments, setComments] = useState({});
   const [joinCode, setJoinCode] = useState('');
   const [inputValues, setInputValues] = useState({});
-  const [selectedRoles, setSelectedRoles] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();
+
   const { retroCode, setRetroCode } = useContext(RetroCodeContext);
+  const [retroId, setRetroId] = useState();
+  const [teamMembers, setTeamMembers] = useState([]);
+  const [activeMember, setActiveMember] = useState();
+  const { teamId } = useParams();
 
   const handleNewRetro = async () => {
-    const response = await fetch(`${apiURL()}/retro/generateRetroCode`, {
+    const response = await fetch(`${apiURL()}/retro/`, {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        teamId,
+        title: 'New retro',
+      }),
+    });
+
+    const teamMembersResponse = await fetch(`${apiURL()}/teams/${teamId}`, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
     if (response.ok) {
-      const newRetroCode = await response.text();
-      setRetroCode(newRetroCode);
+      const results = await response.json();
+      const teamMembersList = await teamMembersResponse.json();
+      setRetroCode(results.retroCode);
       setSelectedQuestions(questions);
+      setTeamMembers(teamMembersList.teamMembers);
+      setRetroId(results.retroId);
     } else {
       throw new Error('Invalid retro code');
     }
@@ -47,15 +64,39 @@ function RetroPage() {
       ...prevComments,
       [questionId]: [
         ...(prevComments[questionId] || []),
-        { id: newCommentId, text: commentText },
+        {
+          id: newCommentId,
+          text: commentText,
+          teamMemberId: activeMember,
+          questionId,
+        },
       ],
     }));
 
     setInputValues((prevValues) => ({ ...prevValues, [questionId]: '' }));
   };
 
-  const handleComplete = () => {
-    navigate('/joinretro');
+  const handleComplete = async () => {
+    const payload = Object.values(comments).reduce(
+      (answersArray, commentsArray) => {
+        answersArray.push(...commentsArray);
+        return answersArray;
+      },
+      [],
+    );
+
+    const response = await fetch(`${apiURL()}/retro/${retroId}/complete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (response.ok) {
+      // eslint-disable-next-line no-alert
+      alert('Retro is completed');
+    }
   };
 
   const handleJoin = async () => {
@@ -96,6 +137,13 @@ function RetroPage() {
       }));
     }
   };
+
+  const renderTeamMembers = (members) =>
+    members.map((member) => (
+      <option key={member.id} value={member.id}>
+        {member.first_name} {member.last_name}
+      </option>
+    ));
 
   return (
     <div>
@@ -139,17 +187,13 @@ function RetroPage() {
               <div className="commentInputContainer">
                 <select
                   className="roleSelect"
-                  value={selectedRoles[question.id] || ''}
-                  onChange={(e) =>
-                    setSelectedRoles((prevRoles) => ({
-                      ...prevRoles,
-                      [question.id]: e.target.value,
-                    }))
-                  }
+                  value={activeMember}
+                  onChange={(e) => {
+                    setActiveMember(e.target.value);
+                  }}
                 >
-                  <option value="">Select role</option>
-                  <option value="teamMember">Team Member</option>
-                  <option value="teamLeader">Team Leader</option>
+                  <option value="">Select member</option>
+                  {renderTeamMembers(teamMembers)}
                 </select>
                 <input
                   type="text"
