@@ -217,9 +217,15 @@ function RetroPage() {
           </div>
         ))}
       </div>
-      <button className="completeButton" type="button" onClick={handleComplete}>
-        Complete
-      </button>
+      <div className="completeButtonContainer">
+        <button
+          className="completeButton"
+          type="button"
+          onClick={handleComplete}
+        >
+          Complete
+        </button>
+      </div>
     </div>
   );
 }

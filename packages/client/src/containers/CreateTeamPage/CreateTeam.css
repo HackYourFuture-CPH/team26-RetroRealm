@@ -1,21 +1,24 @@
 .create-team {
   max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
+  margin: 20px auto; /* Added margin for spacing */
+  padding: 30px;
+  border: 2px solid #660065;
+  border-radius: 10px;
+  background-color: #fff;
+  margin: 20px auto;
 }
 
 h1 {
   font-size: 24px;
   margin-bottom: 20px;
+  color: #660065; /* Adjusted heading color */
 }
 
 h2 {
   font-size: 20px;
   margin-top: 30px;
   margin-bottom: 10px;
+  color: #660065; /* Adjusted heading color */
 }
 
 form {
@@ -24,12 +27,13 @@ form {
 
 label {
   font-weight: bold;
+  color: #9c27b0; /* Adjusted label color */
 }
 
 input[type='text'],
 input[type='email'],
 select {
-  width: 100%;
+  width: calc(100% - 20px); /* Adjusted input width */
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -41,33 +45,39 @@ button {
   margin-top: 10px;
   border: none;
   border-radius: 5px;
-  background-color: #007bff;
+  background-color: #9c27b0;
   color: #fff;
   cursor: pointer;
-  margin-right: 10px;
+  margin-bottom: 10px;
 }
 
 button:first-child {
-  margin-right: 0;
+  margin-right: 10px;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: #7b1fa2;
 }
 
 ul {
   list-style: none;
   padding: 0;
+  margin-bottom: 20px;
 }
 
 li {
   margin-bottom: 10px;
+  border-bottom: 1px solid #ccc; /* Added border bottom */
+  padding-bottom: 10px; /* Added padding bottom */
+}
+
+li:last-child {
+  border-bottom: none; /* Remove border bottom for the last item */
 }
 
 li button {
-  margin-left: 10px;
   padding: 5px 10px;
-  background-color: #dc3545;
+  background-color: #be28ec;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -75,5 +85,39 @@ li button {
 }
 
 li button:hover {
-  background-color: #c82333;
+  background-color: #be28ec;
+}
+input[type='text'],
+input[type='email'],
+select {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  color: #be28ec; /* Set text color to purple */
+}
+
+/* Additional CSS rules */
+input[type='text']::placeholder,
+input[type='email']::placeholder,
+select::placeholder {
+  color: #be28ec; /* Set placeholder color to purple */
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+select:focus {
+  outline-color: #be28ec; /* Set focus outline color to purple */
+}
+
+li {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  color: #9c27b0; /* Set text color to purple */
+}
+
+li:last-child {
+  border-bottom: none;
 }
