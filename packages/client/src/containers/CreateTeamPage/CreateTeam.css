@@ -1,6 +1,6 @@
 .create-team {
   max-width: 600px;
-  margin: 20px auto; /* Added margin for spacing */
+  margin: 20px auto;
   padding: 30px;
   border: 2px solid #660065;
   border-radius: 10px;
@@ -11,14 +11,14 @@
 h1 {
   font-size: 24px;
   margin-bottom: 20px;
-  color: #660065; /* Adjusted heading color */
+  color: #660065;
 }
 
 h2 {
   font-size: 20px;
   margin-top: 30px;
   margin-bottom: 10px;
-  color: #660065; /* Adjusted heading color */
+  color: #660065;
 }
 
 form {
@@ -27,13 +27,13 @@ form {
 
 label {
   font-weight: bold;
-  color: #9c27b0; /* Adjusted label color */
+  color: #9c27b0;
 }
 
 input[type='text'],
 input[type='email'],
 select {
-  width: calc(100% - 20px); /* Adjusted input width */
+  width: calc(100% - 20px);
   padding: 10px;
   margin-bottom: 10px;
   border: 1px solid #ccc;
@@ -67,12 +67,12 @@ ul {
 
 li {
   margin-bottom: 10px;
-  border-bottom: 1px solid #ccc; /* Added border bottom */
-  padding-bottom: 10px; /* Added padding bottom */
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
 li:last-child {
-  border-bottom: none; /* Remove border bottom for the last item */
+  border-bottom: none;
 }
 
 li button {
@@ -95,27 +95,26 @@ select {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  color: #be28ec; /* Set text color to purple */
+  color: #be28ec;
 }
 
-/* Additional CSS rules */
 input[type='text']::placeholder,
 input[type='email']::placeholder,
 select::placeholder {
-  color: #be28ec; /* Set placeholder color to purple */
+  color: #be28ec;
 }
 
 input[type='text']:focus,
 input[type='email']:focus,
 select:focus {
-  outline-color: #be28ec; /* Set focus outline color to purple */
+  outline-color: #be28ec;
 }
 
 li {
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 10px;
-  color: #9c27b0; /* Set text color to purple */
+  color: #9c27b0;
 }
 
 li:last-child {
