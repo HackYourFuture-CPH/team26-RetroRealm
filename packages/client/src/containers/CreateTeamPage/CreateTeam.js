@@ -162,9 +162,6 @@ function CreateTeam() {
         />
 
         <button type="submit">Create Team</button>
-        <br />
-        <h2>Members</h2>
-        <br />
 
         <div>
           <label>First Name</label>
