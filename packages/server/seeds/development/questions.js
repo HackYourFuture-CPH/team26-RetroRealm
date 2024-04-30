@@ -5,10 +5,10 @@ exports.seed = function (knex) {
     .then(() => {
       // Inserts seed entries
       return knex('Questions').insert([
-        { id: 1, title: 'What went well?', color: 'green' },
-        { id: 2, title: "What didn't go well?", color: 'red' },
-        { id: 3, title: 'What can be improved?', color: 'yellow' },
-        { id: 4, title: 'Any other comments?', color: 'blue' },
+        { id: 1, title: 'What did we do well?' },
+        { id: 2, title: 'What did we learn?' },
+        { id: 3, title: 'What should we do differently next time?' },
+        { id: 4, title: 'What are the roadblocks?' },
       ]);
     });
 };
