@@ -8,6 +8,8 @@ const ContactUs = () => {
       <p>
         You can reach us via these emails: komalranjan24@gmail.com ,
         nish.shanika@gmail.com , pastures77@gmail.com
+        <hr />
+        Address: Hack Your Future, Talent Garden
       </p>
     </div>
   );
