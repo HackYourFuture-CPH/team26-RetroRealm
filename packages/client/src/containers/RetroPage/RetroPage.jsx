@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { RetroCodeContext } from '../Contexts/RetroCodeContext';
 import { apiURL } from '../../apiURL';
 import './RetroPage.css';
@@ -12,6 +12,7 @@ const questions = [
 ];
 
 function RetroPage() {
+  const navigate = useNavigate();
   const [selectedQuestions, setSelectedQuestions] = useState([]);
   const [comments, setComments] = useState({});
   const [joinCode, setJoinCode] = useState('');
@@ -23,6 +24,14 @@ function RetroPage() {
   const [teamMembers, setTeamMembers] = useState([]);
   const [activeMember, setActiveMember] = useState();
   const { teamId } = useParams();
+
+  const updateTeam = () => {
+    navigate('*');
+  };
+
+  const pastRetro = () => {
+    navigate('/retros/past');
+  };
 
   const handleNewRetro = async () => {
     const response = await fetch(`${apiURL()}/retro/`, {
@@ -171,6 +180,20 @@ function RetroPage() {
         />
         <button className="joinButton" type="button" onClick={handleJoin}>
           Join
+        </button>
+        <button
+          className="retro-button update-button"
+          type="button"
+          onClick={updateTeam}
+        >
+          Update Team
+        </button>
+        <button
+          className="retro-button past-button"
+          type="button"
+          onClick={pastRetro}
+        >
+          Past Retros
         </button>
       </div>
       <div className="questionsContainer">

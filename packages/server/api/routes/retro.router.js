@@ -85,6 +85,16 @@ router.delete('/:id', (req, res) => {
     .catch((error) => console.log(error));
 });
 
+// New route to fetch completed retrospectives
+router.get('/past', (req, res, next) => {
+  // eslint-disable-next-line no-console
+  console.log((req, res));
+  retroController
+    .getCompletedRetrospectives()
+    .then((result) => res.json(result))
+    .catch(next);
+});
+
 // Error handling middleware
 router.use((err, req, res) => {
   // eslint-disable-next-line no-console

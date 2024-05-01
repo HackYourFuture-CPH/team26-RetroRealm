@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { apiURL } from '../../apiURL';
-import './PastRetro.css';
 
 export function PastRetroPage() {
   const [completedRetros, setCompletedRetros] = useState([]);
@@ -9,16 +8,13 @@ export function PastRetroPage() {
   useEffect(() => {
     const fetchCompletedRetros = async () => {
       try {
-        const response = await fetch(`${apiURL()}/retros/past/`, {
+        const response = await fetch(`${apiURL()}/past/`, {
           method: 'GET',
           headers: {
             Accept: 'application/json',
           },
         });
         if (!response.ok) {
-          const errorBody = await response.text();
-          console.error('Error status:', response.status);
-          console.error('Error body:', errorBody);
           throw new Error('Failed to fetch completed retros');
         }
         const responseData = await response.json();

@@ -7,6 +7,7 @@ const teamsRouter = require('./teams.router');
 const employeesRouter = require('./employees.router');
 const retroRouter = require('./retro.router');
 const questionsRouter = require('./questions.router');
+const pastRouter = require('./past.router');
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -45,5 +46,7 @@ router.use('/employees', employeesRouter);
 router.use('/retro', retroRouter);
 
 router.use('/questions', questionsRouter);
+
+router.use('/past', pastRouter);
 
 module.exports = router;
