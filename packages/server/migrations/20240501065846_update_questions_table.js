@@ -2,18 +2,24 @@
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.up = function(knex)  {
-  return knex.schema.alterTable('Questions', (table) => {
-    table.string('color').nullable();
-  });
+exports.up = async function (knex) {
+  const hasColor = await knex.schema.hasColumn('Questions', 'color');
+  if (!hasColor) {
+    return knex.schema.alterTable('Questions', (table) => {
+      table.string('color').nullable();
+    });
+  }
 };
 
 /**
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-exports.down = function(knex)  {
-  return knex.schema.alterTable('Questions', (table) => {
-    table.dropColumn('color');
-  });
+exports.down = async function (knex) {
+  const hasColor = await knex.schema.hasColumn('Questions', 'color');
+  if (hasColor) {
+    return knex.schema.alterTable('Questions', (table) => {
+      table.dropColumn('color');
+    });
+  }
 };
