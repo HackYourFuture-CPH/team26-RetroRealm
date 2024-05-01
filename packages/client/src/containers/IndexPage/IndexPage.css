@@ -82,22 +82,3 @@
   margin-left: 10px;
   width: 30%;
 }
-
-.footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 0.875rem;
-  color: #6c757d;
-}
-
-.buttonDisabled {
-  background-color: rgb(78, 72, 72);
-  color: rgb(255, 255, 255);
-}
-
-primaryButton {
-  background-color: blue;
-}

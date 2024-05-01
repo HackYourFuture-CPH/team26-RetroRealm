@@ -1,5 +1,7 @@
 import React from 'react';
 import './AboutUsPage.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 
 const AboutUs = () => {
   return (
@@ -25,6 +27,28 @@ const AboutUs = () => {
             passionate about learning coding. Loves creating immersive
             experiences for the community.
           </p>
+          <div className="social-icons">
+            <a
+              href="https://github.com/nishadipri"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">
+                GitHub Profile of Nishadi Priyangika Samarathunge
+              </span>
+              <FontAwesomeIcon icon={faGithub} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/nishadi-samarathunge-125231b0/?originalSubdomain=lk"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">
+                LinkedIn Profile of Nishadi Priyangika Samarathunge
+              </span>
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </div>
         </div>
         <div className="person">
           <img src="/assets/images/Aaron.png" alt="Aaron" />
@@ -35,6 +59,28 @@ const AboutUs = () => {
             wife. Has a keen eye for design and ensures that RetroRealms
             interface is both stylish and user-friendly.
           </p>
+          <div className="social-icons">
+            <a
+              href="https://github.com/SpartanDeBoss"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">
+                GitHub Profile of Nishadi Priyangika Samarathunge
+              </span>
+              <FontAwesomeIcon icon={faGithub} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/aaron-ekow-moses/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">
+                LinkedIn Profile of Nishadi Priyangika Samarathunge
+              </span>
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </div>
         </div>
         <div className="person">
           <img src="/assets/images/Komal.png" alt="Komal Ranjan" />
@@ -45,6 +91,28 @@ const AboutUs = () => {
             learning coding and differrent technical coding languages. Currently
             living in Denamrak. Fell in love with website building.
           </p>
+          <div className="social-icons">
+            <a
+              href="https://github.com/komalranjan9"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">
+                GitHub Profile of Nishadi Priyangika Samarathunge
+              </span>
+              <FontAwesomeIcon icon={faGithub} />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/komal-ranjan-dk/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span className="sr-only">
+                LinkedIn Profile of Nishadi Priyangika Samarathunge
+              </span>
+              <FontAwesomeIcon icon={faLinkedin} />
+            </a>
+          </div>
         </div>
       </div>
     </div>

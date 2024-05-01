@@ -12,6 +12,7 @@ import JoinRetroPage from './containers/JoinRetroPage/JoinRetroPage';
 import { RetroCodeProvider } from './containers/Contexts/RetroCodeProvider';
 import ContactUs from './containers/ContactUsPage/ContactUsPage';
 import AboutUs from './containers/AboutUsPage/AboutUsPage';
+import Footer from './containers/Footer/Footer';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/about" element={<AboutUs />} />
           </Routes>
+          <Footer />
         </Router>
       </RetroCodeProvider>
     </div>

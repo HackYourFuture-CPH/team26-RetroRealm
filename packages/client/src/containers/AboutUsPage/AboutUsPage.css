@@ -29,3 +29,19 @@
 .about-us {
   font-size: 25px;
 }
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  margin-right: 10px; /* Add margin between icons */
+}
+
+.social-icons a:last-child {
+  margin-right: 0; /* Remove margin from the last icon */
+}
+
+.social-icons .fa-icon {
+  color: black; /* Set the color of the icons to black */
+}
